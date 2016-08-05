@@ -18,23 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import models.Figure;
 import models.ProductDemo;
-import services.FigureService;
 import services.ProductDemoService;
 
 @RestController
 public class ManageController
 {
-    private FigureService figureService;
     private ProductDemoService productDemoService;
-    
-    @Autowired(required=true)
-    @Qualifier(value="figureService")
-    public void setFigureService(FigureService fs)
-    {
-        this.figureService = fs;
-    }
     
     @Autowired(required=true)
     @Qualifier(value="productDemoService")
@@ -97,75 +87,29 @@ public class ManageController
     }
     
     
-    
     /*
-     * call addFigure
-     * URL   : localhost:8080/SpringMVCRestAPIDemo/figure/add/
-     * Method: POST
+     * return product for one page = page size
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/product/page/{i}
      * */
-    @CrossOrigin(origins = "http://localhost:9000")
-    @RequestMapping(value="/figure/add", method=RequestMethod.POST, headers="Accept=application/json")
-    public List<Figure> addFigure(@RequestBody Figure f)
+    @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
+    public List<ProductDemo> returnProductForOnePage(@PathVariable int pageNumber)
     {
-        Integer figureNewID = figureService.addFigure(f);
-        return this.figureService.listFigure();
-   //     System.out.println(f);
-     //   return null;
+        int pageSize = 8;
+        System.out.println("abc");
+        return this.productDemoService.returnProductForOnePage(pageNumber, pageSize);
     }
     
-    
-    /*
-     * call listFigure
-     * URL   : localhost:8080/SpringMVCRestAPIDemo/figures
-     * Method: GET
-     * */
-    @CrossOrigin(origins = "http://localhost:9000")
-    @RequestMapping(value = "/figures", method = RequestMethod.GET)
-    public List<Figure> listFigure()
-    {
-        List<Figure> figureList = this.figureService.listFigure();
-        return figureList;
-    }
-    
-    
-    /*
-     * call updateFigure
-     * URL   : localhost:8080/SpringMVCRestAPIDemo/figure/update
-     * METHOD: PUT
-     * */
-    @CrossOrigin(origins = "http://localhost:9000")
-    @RequestMapping(value="/figure/update", method=RequestMethod.PUT)//, consumes="application/json")
-    public List<Figure> updateFigure(@RequestBody Figure f)
-    {
-        figureService.updateFigure(f);
-        return this.figureService.listFigure();
-    }
-  
-
-
-    /*
-     * call removeFigure
-     * URL   : locahost:8080/SpringMVCRestAPIDemo/figure/remove/{id}
-     * @param: id- Integer
-     * */
-    @CrossOrigin(origins = "http://localhost:9000")
-    @RequestMapping(value="/figure/remove/{id}", method=RequestMethod.DELETE)
-    public List<Figure> removeFigure(@PathVariable Integer id)
-    {
-        figureService.removeFigure(id);
-        return this.figureService.listFigure();
-    }
-
-
+ 
     /*
      * call getFigureById
      * URL   : localhost:8080/SpringMVCRestAPIDemo/figure/
      * */
-    @RequestMapping(value="figure/{id}", method=RequestMethod.GET)
+/*    @RequestMapping(value="figure/{id}", method=RequestMethod.GET)
     public Figure getFigureById(@PathVariable Integer id)
     {
         return figureService.getFigureById(id);
-    }
+    }*/
 
 
 }

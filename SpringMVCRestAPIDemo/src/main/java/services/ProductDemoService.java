@@ -10,4 +10,5 @@ public interface ProductDemoService
     public List<ProductDemo> listProductDemo();
     public void updateProductDemo(ProductDemo p);
     public void removeProductDemo(Integer id);
+    public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize);
 }

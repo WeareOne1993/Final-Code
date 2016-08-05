@@ -6,6 +6,8 @@ let httpClient = new HttpClient();
 export class Items {
   heading = 'Items';
   apiKey = "";
+  a= 1;
+  dataApp = [];
 
   deleteData(a) {
     let remove ='http://localhost:8080/SpringMVCRestAPIDemo/figure/remove/' +a;
@@ -16,7 +18,16 @@ export class Items {
       .then(data => {
         console.log(data);
      });
-  } 
+  }
+
+  getData(a) {
+      httpClient.fetch('http://localhost:8080/SpringMVCRestAPIDemo/product/page/' + a)
+      .then(response => response.json())
+      .then(datas=> this.datas = datas)
+      .then(data => {
+         console.log(data);
+      });
+   } 
 
   constructor(http) {
     http.configure(config => {
@@ -35,25 +46,25 @@ export class Items {
     this.http = http;
   }
 
-attach() {
+  attach() {
 
-let auth = {
-  "id":1,
-      "name" : "name",
-      "price" : 100,
-      "path" : "src"
-};
-return this.http.fetch('add', {
-      method: 'post',
-      body: JSON.stringify(auth),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(response => {
-      this.apiKey = response.APIKey;
-});
-}
+  let auth = {
+    "id":1,
+        "name" : "name",
+        "price" : 100,
+        "path" : "src"
+  };
+  return this.http.fetch('add', {
+        method: 'post',
+        body: JSON.stringify(auth),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(response => {
+        this.apiKey = response.APIKey;
+  });
+  }
 }

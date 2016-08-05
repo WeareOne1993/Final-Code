@@ -257,28 +257,45 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         int newId;
         pageSize = 8;
         
-//        try
-//        {
-//            tr = session.beginTransaction();
-//            
-//            // count data size
-//            String hql = "SELECT count(*) FROM productDemo";
-//            Query query = session.createQuery(hql);
-//            countDataSize = (Long) query.getSingleResult();            
-//                
-//            //get data for 1 page
-//            hql = "FROM productDemo";
-//            query = session.createQuery(hql);
-//            query.setFirstResult(pageNumber-1);
-//            query.setMaxResults(pageSize);
-//            List<ProductDemo> productDemos = query.list();
-//            
-//            newId = (int) countDataSize;
-//            ProductDemo productDemoForCount = new ProductDemo((int) countDataSize);
-//            
-//            
-//            
-//        }
+        try
+        {
+            tr = session.beginTransaction();
+            
+            // count data size
+            String hql = "SELECT count(*) FROM ProductDemo";
+            Query query = session.createQuery(hql);
+            countDataSize = (Long) query.getSingleResult();            
+            newId = (int) countDataSize;
+            
+            //page number nay vuot wa' so luong data
+            if ((pageNumber-1)*pageSize+1 > newId)
+            {
+                return null;
+            }
+            else
+            {
+              //get data for 1 page
+                hql = "FROM ProductDemo";
+                query = session.createQuery(hql);
+                query.setFirstResult((pageNumber-1)*pageSize);
+                query.setMaxResults(pageSize);
+                List<ProductDemo> productDemos = query.list();
+                ProductDemo productDemoForCount = new ProductDemo(newId);
+                productDemos.add(productDemoForCount); 
+                
+                return productDemos;
+            }
+        }
+        catch(HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
         
         return null;
     }

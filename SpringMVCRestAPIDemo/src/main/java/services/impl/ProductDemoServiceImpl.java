@@ -41,5 +41,11 @@ public class ProductDemoServiceImpl implements ProductDemoService {
         this.productDemoDAO.removeProductDemo(id);
 
     }
+    
+    @Transactional
+    public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize)
+    {
+        return this.productDemoDAO.returnProductForOnePage(pageNumber, pageSize);
+    }
 
 }

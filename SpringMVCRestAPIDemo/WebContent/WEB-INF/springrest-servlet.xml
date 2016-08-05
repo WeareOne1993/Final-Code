@@ -30,7 +30,6 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
-				<value>models.Figure</value>
 				<value>models.ProductDemo</value>
 			</list>
 		</property>
@@ -43,14 +42,6 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 		</property>
 	</bean>
 
-	<bean id="figureDAO" class="dao.impl.FigureDAOImpl">
-		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	</bean>
-
-	<bean id="figureService" class="services.impl.FigureServiceImpl">
-		<property name="figureDAO" ref="figureDAO" />
-	</bean>
-	
 	<bean id="productDemoDAO" class="dao.impl.ProductDemoDAOImpl">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
 	</bean>

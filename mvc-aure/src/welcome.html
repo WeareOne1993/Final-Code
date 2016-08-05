@@ -1,5 +1,5 @@
 <template>
-  <style>
+<style>
   body{
     background-color: #eaedf7;
   }
@@ -13,7 +13,7 @@
   a:hover, a:focus {
     color: #23527c;
     text-decoration: none;
-}
+  }
 
   .showPro{
     width: 1140px;
@@ -28,7 +28,7 @@
     position: absolute;
     left: 750px;
     right:0px;
-}
+  }
 
   .form-group{
     margin-left : 900px;
@@ -46,226 +46,230 @@
     background-color: #85c1da;
     border-color: #337ab7;
     width: 140px;
-}
+  }
 
   .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: #eae2e2;
     text-decoration: none;
     background-color: #85c1da;
-}
+  }
 
-.btn-info {
+  .btn-info {
     color: #fff;
     background-color: #f3f6f7;
     border-color: #c8e1e8;
     margin-bottom: 30px;
-}
+  }
 
-.modal-content {
-  width: 600px;
-  height: 600px;
-  margin-top: 200px;
+  .modal-content {
+    width: 600px;
+    height: 600px;
+    margin-top: 200px;
 
-}
+  }
 
-.modal-body {
-  height: 480px;
-}
+  .modal-body {
+    height: 480px;
+  }
 
-.img_product{
-  width: 220px;
-  height: 450px;
-  float: left;
-}
-.imfo_product{
-  width:340px;
-  float:right;
-}
-.clear{
-  clear:both;
-}
+  .img_product{
+    width: 220px;
+    height: 450px;
+    float: left;
+  }
+  .imfo_product{
+    width:340px;
+    float:right;
+  }
+  .clear{
+    clear:both;
+  }
 
-.input-group-addon:first-child {
-    width: 120px;
-    border-right: 0;
-}
+  .input-group-addon:first-child {
+      width: 120px;
+      border-right: 0;
+  }
 
-.thumbnail > img, .thumbnail a > img {
-    margin-right: auto;
-    margin-left: auto;
-    height: 300px;
-}
+  .thumbnail > img, .thumbnail a > img {
+      margin-right: auto;
+      margin-left: auto;
+      height: 300px;
+  }
 
-.deleteProduct .modal-content {
-    height: 290px;
-    width: 500px;
-}
+  .deleteProduct .modal-content {
+      height: 290px;
+      width: 500px;
+  }
 
-.deleteProduct span {
-    margin-left: 120px;
-}
+  .deleteProduct span {
+      margin-left: 120px;
+  }
 
-.deleteProduct img {
-    margin-left: 152px;
-}
+  .deleteProduct img {
+      margin-left: 152px;
+  }
 
-.deleteProduct button {
-    margin-left: 50px;
-}
-div#del {
-    margin-left: 100px;
-}
+  .deleteProduct button {
+      margin-left: 50px;
+  }
+  div#del {
+      margin-left: 100px;
+  }
 
-.nav-pills > li > a {
-    border-radius: 4px;
-    font-size: 1.5em;
-    font-style: italic;
-}
+  .nav-pills > li > a {
+      border-radius: 4px;
+      font-size: 1.5em;
+      font-style: italic;
+  }
 
-a{
-  color: white;
-}
-
-ul.dropdown-menu a {
+  a{
     color: white;
-    margin-left: 10px;
-}
-ul.dropdown-menu a:hover{
-  color: red;
-}
+  }
 
-ul.dropdown-menu {
-    width: 1140px;
-}
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
-    font-size: 14px;
-    text-align: left;
-    list-style: none;
-    background-color: #555;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-}
+  ul.dropdown-menu a {
+      color: white;
+      margin-left: 10px;
+  }
+  ul.dropdown-menu a:hover{
+    color: red;
+  }
 
-ul.nav.nav-pills {
-    margin-bottom: 35px;
-}
+  ul.dropdown-menu {
+      width: 1140px;
+  }
+  .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      display: none;
+      float: left;
+      min-width: 160px;
+      padding: 5px 0;
+      margin: 2px 0 0;
+      font-size: 14px;
+      text-align: left;
+      list-style: none;
+      background-color: #555;
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, .15);
+      border-radius: 4px;
+      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  }
 
-section.au-animate {
-    margin-top: 4px;
-}
+  ul.nav.nav-pills {
+      margin-bottom: 35px;
+  }
 
-.bar {
-  margin-top: 3px;
-  height: 55px;
-  margin-bottom: 45px; 
-  width: 1140px;
-  background-color: #274165;
-}
+  section.au-animate {
+      margin-top: 4px;
+  }
 
-.bar button.btn.btn-info {
-    color: #fff;
-    background-color: #274165;
-    border-color: #274165;
-    width: 100px;
+  .bar {
+    margin-top: 3px;
     height: 55px;
-    margin-bottom: 0px;
-}
+    margin-bottom: 45px; 
+    width: 1140px;
+    background-color: #274165;
+  }
 
-.bar button.btn.btn-info:hover,.bar button.btn.btn-info:focus {
-    color: #274165;
-    background-color: #fff;
-    border-radius: 0;
-    border-color: #274165;
-}
+  .bar button.btn.btn-info {
+      color: #fff;
+      background-color: #274165;
+      border-color: #274165;
+      width: 100px;
+      height: 55px;
+      margin-bottom: 0px;
+  }
+
+  .bar button.btn.btn-info:hover,.bar button.btn.btn-info:focus {
+      color: #274165;
+      background-color: #fff;
+      border-radius: 0;
+      border-color: #274165;
+  }
 
 
-div#demo {
-    margin: auto;
-    margin-left: 0px;
-    height: 40px;
-}
+  div#demo {
+      margin: auto;
+      margin-left: 0px;
+      height: 40px;
+  }
 
-div#demo label {
-    margin: 10px;
-}
-.collapse{
+  div#demo label {
+      margin: 10px;
+  }
+  .collapse{
 
-}
+  }
 
-.bara{
-  float: left;
-}
-.barb{
-  float: right;
-}
-
-input.form-control {
-    width: 200px;
-    margin: 10px;
-    margin-top: 10px;
-    margin-right: 0px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+  .bara{
     float: left;
-}
+  }
+  .barb{
+    float: right;
+  }
 
-.input-group-addon {
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1;
-    color: #555;
-    text-align: left;
-    background-color: #eee;
-    border: 0px solid #ccc;
-    border-radius: 0px;
-}
+  input.form-control {
+      width: 200px;
+      margin: 10px;
+      margin-top: 10px;
+      margin-right: 0px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      float: left;
+  }
 
-.list-group-item#a{
-    position: relative;
-    display: block;
-    padding: 0px 15px;
-    margin-bottom: -1px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    height: 45px;
-}
+  .input-group-addon {
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1;
+      color: #555;
+      text-align: left;
+      background-color: #eee;
+      border: 0px solid #ccc;
+      border-radius: 0px;
+  }
 
-.input-group .form-control {
-    position: relative;
-    z-index: 2;
-    float: left;
-    width: 100%;
-    margin-bottom: 20px;
-}
+  .list-group-item#a{
+      position: relative;
+      display: block;
+      padding: 0px 15px;
+      margin-bottom: -1px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      height: 45px;
+  }
 
-a {
-    color: #f1a7a7;
-}
-#ab{
-  display: none;
-}
+  .input-group .form-control {
+      position: relative;
+      z-index: 2;
+      float: left;
+      width: 100%;
+      margin-bottom: 20px;
+  }
 
-.takeData{
-  display: none;
-}
+  a {
+      color: #f1a7a7;
+  }
+  #ab{
+    display: none;
+  }
+
+  .takeData{
+    display: none;
+  }
 </style>
 
-</script>
+
+  <div>
+    <button click.delegate="dataTest=getData()">I love you</button>
+    <h1>1-${dataTest}</h1>
+  </div>
   <!--Take Data -->
   <!--Take Data -->
   <section class="au-animate">
@@ -330,334 +334,57 @@ a {
       <div class="clear"></div>
     </div>
 
-    <h1>1-${checkPro} - ${checkWatch} -${checkJe} - countDataType(users)</h1>
     <!--Thumbnails-->
     <div class="product">
       <div class="row" >
-        <!--TRuong hop du~ ddddddddddddddddddddddddddddddd -->
-        <div class="col-xs-6 col-md-3" repeat.for="i of page" if.bind="pageCur<= users.length/page">
-          <!-- DOING==========================================================================-->
-          <!--Type Product -->
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#A${page*pageCur + i -1}" if.bind="checkPro == true">
-            <a href="#" class="thumbnail" if.bind="users[page*pageCur + i -page].type == 'watch' ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
 
-            <a href="#" class="thumbnail" if.bind="users[page*pageCur + i -page].type == 'jewelry' ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
-          </button>
-
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#A${page*pageCur + i -1}" if.bind="(checkPro == false) && (users[page*pageCur + i - page].type == 'watch') && (checkWatch == true)">
-            <a href="#" class="thumbnail" if.bind="(users[page*pageCur + i -page].type == 'watch') ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
-          </button>
-
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#A${page*pageCur + i -1}" if.bind="(checkPro == false) && (users[page*pageCur + i - page].type == 'jewelry') && (checkJe == true)">
-            <a href="#" class="thumbnail" if.bind="(users[page*pageCur + i -page].type == 'jewelry') ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
-          </button>
-
-          
-
-
-          <!--End Type Product -->
-
-          <div class="modal fade" id="A${page*pageCur + i -1}" role="dialog">
-            <div class="modal-dialog">
-            
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">${i}</h4>
-                </div>
-                <!--=================================================================== -->
-                <!--EDIT OF ============================================================================== -->
-                                <!--WATCH -->
-                <div if.bind="users[page*pageCur + i -page].type == 'watch'">
-                  <div class="modal-body" if.bind="editData == false">
-                    <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px"></div>
-                    <div class="imfo_product">
-                      <ul class="list-group">
-                        <li class="list-group-item"> ID : ${users[page*pageCur + i -page].id}</li>
-                        <li class="list-group-item"> Name: ${users[page*pageCur + i -page].name}</li>
-                        <li class="list-group-item"> Price : ${users[page*pageCur + i -page].price}</li>
-                        <li class="list-group-item"> Type : ${users[page*pageCur + i -page].type}</li>
-                        <li class="list-group-item"> Brand: ${users[page*pageCur + i -page].brand}</li>
-                        <li class="list-group-item"> Model : ${users[page*pageCur + i -page].model}</li>
-                        <li class="list-group-item"> Gender : ${users[page*pageCur + i -page].gender}</li>
-                        <li class="list-group-item"> Movement: ${users[page*pageCur + i -page].movement}</li>
-                        <li class="list-group-item"> Watch Label : ${users[page*pageCur + i -page].watchLabel}</li>
-                        <li class="list-group-item"> Case Shape : ${users[page*pageCur + i -page].caseShape}</li>
-                      </ul>
-                    </div>
-                    <div class="clear"></div>
-                  </div>
-                  <!--EDIT ============================================================================== -->
-                  <div class="modal-body" if.bind="editData == true">
-                    <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px">
-                    </div>
-                    <div class="imfo_product">
-                      <ul class="list-group">
-    
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Name</span>
-                            <input type="text" class="form-control" placeholder="Product' Name" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].name">
-                          </div>
-                        </li>
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Price</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].price">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Type</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].type">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Brand</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].brand">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Model</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].model">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Gender</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].gender">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Movement</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].movement">
-                          </div>
-                        </li>
-
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">WatchLabel</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].watchLabel">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Image</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].path">
-                          </div>
-                        </li>
-
-                      </ul>
-                    </div>
-                    <div class="clear"></div>
-                  </div>
-                </div>
-                                <!--JEWELRY -->
-                <div if.bind="users[page*pageCur + i -page].type == 'jewelry'">
-                  <div class="modal-body" if.bind="editData == false">
-                    <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px"></div>
-                    <div class="imfo_product">
-                      <ul class="list-group">
-                        <li class="list-group-item">ID : ${users[page*pageCur + i -page].id}</li>
-                        <li class="list-group-item">Name: ${users[page*pageCur + i -page].name}</li>
-                        <li class="list-group-item">Price : ${users[page*pageCur + i -page].price}</li>
-                        <li class="list-group-item">Type : ${users[page*pageCur + i -page].type}</li>
-                        <li class="list-group-item">Clasp : ${users[page*pageCur + i -page].metal}</li>
-                        <li class="list-group-item">Chain Length : ${users[page*pageCur + i -page].chainLength}</li>
-                        <li class="list-group-item">Chain Type : ${users[page*pageCur + i -page].chainType}</li>
-                        <li class="list-group-item">Rhodium Plated : ${users[page*pageCur + i -page].rhodiumPlated}</li>
-                        <li class="list-group-item">Minimum Color : ${users[page*pageCur + i -page].minimumColor}</li>
-                      </ul>
-                    </div>
-                    <div class="clear"></div>
-                  </div>
-                  <!--EDIT ============================================================================== -->
-                  <div class="modal-body" if.bind="editData == true">
-                    <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px">
-                    </div>
-                    <div class="imfo_product">
-                      <ul class="list-group">
-              
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Name</span>
-                            <input type="text" class="form-control" placeholder="Product' Name" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].name">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Price</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].price">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Type</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].type">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Metal</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].metal">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Chain Length</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].chainLength">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Rhodium Plated</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].rhodiumPlated">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Chain Type</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].chainType">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Minimum Color</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].minimumColor">
-                          </div>
-                        </li>
-
-                        <li class="list-group-item" id="a">
-                          <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Image</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].path">
-                          </div>
-                        </li>
-
-
-                      </ul>
-                    </div>
-                    <div class="clear"></div>
-                  </div>
-                </div>
-                <!--=================================================================== -->
-                <div class="modal-footer" if.bind="editData== false">
-                  <button type="button" class="btn btn-default" click.delegate="editData=true">Edit</button>
-                  <!--DELETE -->
-                  <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#delete" click.delegate="deleteData= users[page*pageCur + i -page] "> Delete </button>
-
-                  <!--END DELETE -->
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-                <div class="modal-footer" if.bind="editData== true">
-                  <button type="button" class="btn btn-default" data-dismiss="modal" click.delegate="editData=false" click.trigger="updateData( users[page*pageCur + i -page].id,users[page*pageCur + i -page].name, users[page*pageCur + i -page].price,users[page*pageCur + i -page].path)">Yes</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal" click.delegate="editData=false">No</button>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-    
-          </div>
         <!--TRuong hop thieu ddddddddddddddddddddddddddddddd -->
-        <div class="col-xs-6 col-md-3" repeat.for="i of users.length%page" if.bind="pageCur > users.length/page">
+        <div class="col-xs-6 col-md-3" repeat.for="product of (checkClick=1? users : datas)" if.bind="product.name != null">
           <!-- DOING==========================================================================-->
           <!--Type Product -->
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#A${page*pageCur + i -1}" if.bind="checkPro == true">
-            <a href="#" class="thumbnail" if.bind="users[page*pageCur + i -page].type == 'watch' ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
-
-            <a href="#" class="thumbnail" if.bind="users[page*pageCur + i -page].type == 'jewelry' ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#${product.id}">
+            <a href="#" class="thumbnail">
+              <img src="${product.path}" alt="...">
+              <p> ${product.id}</p>
             </a>
           </button>
-
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#A${page*pageCur + i -1}" if.bind="(checkPro == false) && (users[page*pageCur + i - page].type == 'watch') && (checkWatch == true)">
-            <a href="#" class="thumbnail" if.bind="(users[page*pageCur + i -page].type == 'watch') ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
-          </button>
-
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#A${page*pageCur + i -1}" if.bind="(checkPro == false) && (users[page*pageCur + i - page].type == 'jewelry') && (checkJe == true)">
-            <a href="#" class="thumbnail" if.bind="(users[page*pageCur + i -page].type == 'jewelry') ">
-              <img src="${users[page*pageCur + i -page].path}" alt="...">
-              <p> ${users[page*pageCur + i - page].id}</p>
-            </a>
-          </button>
-
-          
-
 
           <!--End Type Product -->
 
-          <div class="modal fade" id="A${page*pageCur + i -1}" role="dialog">
+          <div class="modal fade" id="${product.id}" role="dialog">
             <div class="modal-dialog">
             
               <!-- Modal content-->
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">${i}</h4>
+                  <h4 class="modal-title">${product.id}</h4>
                 </div>
                 <!--=================================================================== -->
                 <!--EDIT OF ============================================================================== -->
                                 <!--WATCH -->
-                <div if.bind="users[page*pageCur + i -page].type == 'watch'">
+                <div if.bind="product.type == 'watch'">
                   <div class="modal-body" if.bind="editData == false">
-                    <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px"></div>
+                    <div class="img_product"><img src="${product.path}" width ="200px"></div>
                     <div class="imfo_product">
                       <ul class="list-group">
-                        <li class="list-group-item"> ID : ${users[page*pageCur + i -page].id}</li>
-                        <li class="list-group-item"> Name: ${users[page*pageCur + i -page].name}</li>
-                        <li class="list-group-item"> Price : ${users[page*pageCur + i -page].price}</li>
-                        <li class="list-group-item"> Type : ${users[page*pageCur + i -page].type}</li>
-                        <li class="list-group-item"> Brand: ${users[page*pageCur + i -page].brand}</li>
-                        <li class="list-group-item"> Model : ${users[page*pageCur + i -page].model}</li>
-                        <li class="list-group-item"> Gender : ${users[page*pageCur + i -page].gender}</li>
-                        <li class="list-group-item"> Movement: ${users[page*pageCur + i -page].movement}</li>
-                        <li class="list-group-item"> Watch Label : ${users[page*pageCur + i -page].watchLabel}</li>
-                        <li class="list-group-item"> Case Shape : ${users[page*pageCur + i -page].caseShape}</li>
+                        <li class="list-group-item"> ID : ${product.id}</li>
+                        <li class="list-group-item"> Name: ${product.name}</li>
+                        <li class="list-group-item"> Price : ${product.price}</li>
+                        <li class="list-group-item"> Type : ${product.type}</li>
+                        <li class="list-group-item"> Brand: ${product.brand}</li>
+                        <li class="list-group-item"> Model : ${product.model}</li>
+                        <li class="list-group-item"> Gender : ${product.gender}</li>
+                        <li class="list-group-item"> Movement: ${product.movement}</li>
+                        <li class="list-group-item"> Watch Label : ${product.watchLabel}</li>
+                        <li class="list-group-item"> Case Shape : ${product.caseShape}</li>
                       </ul>
                     </div>
                     <div class="clear"></div>
                   </div>
                   <!--EDIT ============================================================================== -->
                   <div class="modal-body" if.bind="editData == true">
-                    <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px">
+                    <div class="img_product"><img src="${product.path}" width ="200px">
                     </div>
                     <div class="imfo_product">
                       <ul class="list-group">
@@ -665,48 +392,48 @@ a {
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Name</span>
-                            <input type="text" class="form-control" placeholder="Product' Name" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].name">
+                            <input type="text" class="form-control" placeholder="Product' Name" aria-describedby="basic-addon1" value.bind="product.name">
                           </div>
                         </li>
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Price</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].price">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.price">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Type</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].type">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.type">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Brand</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].brand">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.brand">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Model</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].model">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.model">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Gender</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].gender">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.gender">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Movement</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].movement">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.movement">
                           </div>
                         </li>
 
@@ -714,14 +441,14 @@ a {
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">WatchLabel</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].watchLabel">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.watchLabel">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Image</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].path">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.path">
                           </div>
                         </li>
 
@@ -731,20 +458,20 @@ a {
                   </div>
                 </div>
                                 <!--JEWELRY -->
-                <div if.bind="users[page*pageCur + i -page].type == 'jewelry'">
+                <div if.bind="product.type == 'jewelry'">
                   <div class="modal-body" if.bind="editData == false">
                     <div class="img_product"><img src="${users[page*pageCur + i -page].path}" width ="200px"></div>
                     <div class="imfo_product">
                       <ul class="list-group">
-                        <li class="list-group-item">ID : ${users[page*pageCur + i -page].id}</li>
-                        <li class="list-group-item">Name: ${users[page*pageCur + i -page].name}</li>
-                        <li class="list-group-item">Price : ${users[page*pageCur + i -page].price}</li>
-                        <li class="list-group-item">Type : ${users[page*pageCur + i -page].type}</li>
-                        <li class="list-group-item">Clasp : ${users[page*pageCur + i -page].metal}</li>
-                        <li class="list-group-item">Chain Length : ${users[page*pageCur + i -page].chainLength}</li>
-                        <li class="list-group-item">Chain Type : ${users[page*pageCur + i -page].chainType}</li>
-                        <li class="list-group-item">Rhodium Plated : ${users[page*pageCur + i -page].rhodiumPlated}</li>
-                        <li class="list-group-item">Minimum Color : ${users[page*pageCur + i -page].minimumColor}</li>
+                        <li class="list-group-item">ID : ${product.id}</li>
+                        <li class="list-group-item">Name: ${product.name}</li>
+                        <li class="list-group-item">Price : ${product.price}</li>
+                        <li class="list-group-item">Type : ${product.type}</li>
+                        <li class="list-group-item">Clasp : ${product.metal}</li>
+                        <li class="list-group-item">Chain Length : ${product.chainLength}</li>
+                        <li class="list-group-item">Chain Type : ${product.chainType}</li>
+                        <li class="list-group-item">Rhodium Plated : ${product.rhodiumPlated}</li>
+                        <li class="list-group-item">Minimum Color : ${product.minimumColor}</li>
                       </ul>
                     </div>
                     <div class="clear"></div>
@@ -759,63 +486,63 @@ a {
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Name</span>
-                            <input type="text" class="form-control" placeholder="Product' Name" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].name">
+                            <input type="text" class="form-control" placeholder="Product' Name" aria-describedby="basic-addon1" value.bind="product.name">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Price</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].price">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.price">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Type</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].type">
+                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="product.type">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Metal</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].metal">
+                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="product.metal">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Chain Length</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].chainLength">
+                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="product.chainLength">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Rhodium Plated</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].rhodiumPlated">
+                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="product.rhodiumPlated">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Chain Type</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].chainType">
+                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="product.chainType">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Minimum Color</span>
-                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].minimumColor">
+                            <input type="text" class="form-control" placeholder="Product'ID" aria-describedby="basic-addon1" value.bind="product.minimumColor">
                           </div>
                         </li>
 
                         <li class="list-group-item" id="a">
                           <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Image</span>
-                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="users[page*pageCur + i -page].path">
+                            <input type="text" class="form-control" placeholder="Product' price" aria-describedby="basic-addon1" value.bind="product.path">
                           </div>
                         </li>
 
@@ -859,18 +586,7 @@ a {
         </li>
 
         <li>
-          <a href="#" repeat.for="i of users.length/page+1" if.bind="users.length%page!=0" click.delegate="pageCur=i+1">${i+1}</a>
-          <a href="#" repeat.for="i of users.length/page" if.bind="users.length%page==0" click.delegate="pageCur=i+1">${i+1}</a>
-        </li>
-
-        <li if.bind="(checkPro == false) && (checkWatch==true) && (checkJe==false)">
-          <a href="#" repeat.for="i of countDataType(users)/page+1" if.bind="countDataType(users)%page!=0" click.delegate="pageCur=i+1">${i+1}</a>
-          <a href="#" repeat.for="i of countDataType(users)/page" if.bind="countDataType(users)%page==0" click.delegate="pageCur=i+1">${i+1}</a>
-        </li>
-
-        <li if.bind="(checkPro == false) && (checkWatch==false) && (checkJe==true)" >
-          <a href="#" repeat.for="i of ( users.length - countDataType(users))/page+1" if.bind="( users.length - countDataType(users))%page!=0" click.delegate="pageCur=i+1">${i+1}</a>
-          <a href="#" repeat.for="i of ( users.length - countDataType(users))/page" if.bind="( users.length - countDataType(users))%page==0" click.delegate="pageCur=i+1">${i+1}</a>
+          <a href="#" repeat.for="i of users[users.length - 1].id " click.delegate="getData(i+1) && (checkClick=1)">${i+1}</a>
         </li>
 
         <li>
@@ -894,7 +610,7 @@ a {
             <img src="${deleteData.path}" height="180px" width="180px" alt="...">
             <br><br>
             <div id="del">
-              <button type="button" class="btn btn-default" data-dismiss="modal" click.trigger="delete(users, deleteData)" click.delegate="deleteDataa(deleteData.id)" value.one-way="users">Yes</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" click.trigger="delete(users, deleteData)" click.delegate="(deleteDataa(deleteData.id)) && (activate())" value.one-way="users">Yes</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
             </div>
           </div>

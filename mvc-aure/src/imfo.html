@@ -1,3 +1,5 @@
 <template>
-	<button click.trigger="attach()">post</button>
+	<button click.delegate="getData(1)" >post</button>
+	<button click.delegate="a=0?appData = datas: appData =3 ">take data</button>
+	<h1>${appData}</h1>
 </template>

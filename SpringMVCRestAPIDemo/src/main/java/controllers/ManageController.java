@@ -96,7 +96,6 @@ public class ManageController
     public List<ProductDemo> returnProductForOnePage(@PathVariable int pageNumber)
     {
         int pageSize = 8;
-        System.out.println("abc");
         return this.productDemoService.returnProductForOnePage(pageNumber, pageSize);
     }
     

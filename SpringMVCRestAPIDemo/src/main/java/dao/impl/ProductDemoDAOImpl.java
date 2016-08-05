@@ -249,11 +249,11 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
     }
 
-    public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize)
+    @SuppressWarnings("deprecation")
+	public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize)
     {
         Session session = sessionFactory.openSession();
         Transaction tr = null;
-        long countDataSize;
         int newId;
         pageSize = 8;
         
@@ -263,12 +263,21 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             
             // count data size
             String hql = "SELECT count(*) FROM ProductDemo";
-            Query query = session.createQuery(hql);
-            countDataSize = (Long) query.getSingleResult();            
-            newId = (int) countDataSize;
+            @SuppressWarnings("rawtypes")
+			Query query = session.createQuery(hql);
+            newId = ((Long) query.uniqueResult()).intValue();
+            
+            if (newId%pageSize == 0)
+            {
+            	newId = newId/pageSize;            	
+            }
+            else
+            {
+            	newId = newId/pageSize + 1;
+            }
             
             //page number nay vuot wa' so luong data
-            if ((pageNumber-1)*pageSize+1 > newId)
+            if (pageNumber > newId)
             {
                 return null;
             }

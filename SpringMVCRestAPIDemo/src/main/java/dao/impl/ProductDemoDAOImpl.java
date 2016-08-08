@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -323,6 +324,15 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             Query query = session.createQuery(hql);
             query.setParameter("name", "%" + name + "%");
             maxDataSize = ((Long) query.uniqueResult()).intValue();
+            
+            if (maxDataSize == 0)
+            {
+                List<ProductDemo> products = new ArrayList<ProductDemo>();
+                ProductDemo product = new ProductDemo(0, 0);
+                products.add(product);
+                
+                return products;
+            }
             
             if (maxDataSize%pageSize == 0)
             {

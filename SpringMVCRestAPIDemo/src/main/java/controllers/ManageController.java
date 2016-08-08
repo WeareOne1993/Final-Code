@@ -25,6 +25,7 @@ import services.ProductDemoService;
 public class ManageController
 {
     private ProductDemoService productDemoService;
+    private int pageSize = 8; 
     
     @Autowired(required=true)
     @Qualifier(value="productDemoService")
@@ -54,10 +55,10 @@ public class ManageController
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/add", method=RequestMethod.POST, headers="Accept=application/json")
-    public String addProductDemo(@RequestBody ProductDemo pd)
+    public List<ProductDemo> addProductDemo(@RequestBody ProductDemo pd)
     {
         Integer productDemoNewId = productDemoService.addProductDemo(pd);
-        return "Added";
+        return this.productDemoService.returnProductsForOnePage(1, pageSize);
     }
     
     
@@ -81,14 +82,16 @@ public class ManageController
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/remove/{id}", method=RequestMethod.DELETE)
-    public void removeProductDemo(@PathVariable int id)
+    public String removeProductDemo(@PathVariable int id)
     {
         this.productDemoService.removeProductDemo(id);
+        
+        return "Removed";
     }
     
     
     /*
-     * return product for one page = page size
+     * return product for one page = page size + + return max page number
      * URL    : localhost:8080/SpringMVCRestAPIDemo/product/page/{i}
      * method : GET
      * */
@@ -96,8 +99,6 @@ public class ManageController
     @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForOnePage(@PathVariable int pageNumber)
     {
-        int pageSize = 8;
-        
         return this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
     }
     
@@ -108,11 +109,22 @@ public class ManageController
      * method : GET
      * */
     @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/product/watch/page/{pageNumber}", method=RequestMethod.GET)
+    public List<ProductDemo> returnProductsWatchForOnePage(@PathVariable int pageNumber)
+    {
+        return this.productDemoService.returnProductsWatchForOnePage(pageNumber, pageSize);
+    }
+    
+    
+    /*
+     * return WATCH products for search name in one page + return max page number
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/product/search?page=***&name=****
+     * method : GET
+     * */
+    @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/search", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForSearchNameForOnePage(@RequestParam("page") int pageNumber, @RequestParam("name") String name)
     {
-        int pageSize = 8;
-        
         return this.productDemoService.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     

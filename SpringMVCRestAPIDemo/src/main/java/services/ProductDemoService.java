@@ -12,5 +12,6 @@ public interface ProductDemoService
     public void removeProductDemo(Integer id);
     public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize);
     public List<ProductDemo> returnProductsWatchForOnePage(int pageNumber, int pageSize);
+    public List<ProductDemo> returnProductsJewelryForOnePage(int pageNumber, int pageSize);
     public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name);
 }

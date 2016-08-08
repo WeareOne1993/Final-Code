@@ -52,6 +52,12 @@ public class ProductDemoServiceImpl implements ProductDemoService {
     public List<ProductDemo> returnProductsWatchForOnePage(int pageNumber, int pageSize)
     {
         return this.productDemoDAO.returnProductsWatchForOnePage(pageNumber, pageSize);
+    }    
+    
+    @Transactional
+    public List<ProductDemo> returnProductsJewelryForOnePage(int pageNumber, int pageSize)
+    {
+        return this.productDemoDAO.returnProductsJewelryForOnePage(pageNumber, pageSize);
     }
     
     @Transactional

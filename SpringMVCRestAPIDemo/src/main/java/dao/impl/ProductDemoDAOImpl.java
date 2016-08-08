@@ -424,4 +424,63 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         
         return null;  
     }
+
+    public List<ProductDemo> returnProductsJewelryForOnePage(int pageNumber, int pageSize)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        int maxPageSize;
+        double maxDataSize;
+        
+        try
+        {
+            tr = session.beginTransaction();
+            
+            // count data size
+            String hql = "SELECT count(*) FROM ProductDemo AS p WHERE p.type = 'jewelry'";
+            Query query = session.createQuery(hql);
+            maxDataSize = ((Long) query.uniqueResult()).intValue();
+            
+            if (maxDataSize%pageSize == 0)
+            {
+                maxPageSize = (int) maxDataSize/pageSize;               
+            }
+            else
+            {
+                maxPageSize = (int) maxDataSize/pageSize + 1;
+            }
+            
+            //page number nay vuot wa' so luong data
+            if (pageNumber > maxPageSize || pageNumber == 0)
+            {
+                return null;
+            }
+            else
+            {
+              //get data for 1 page
+                hql = "FROM ProductDemo as p WHERE p.type = 'jewelry'";
+                query = session.createQuery(hql);
+                query.setFirstResult((pageNumber-1)*pageSize);
+                query.setMaxResults(pageSize);
+                List<ProductDemo> productDemos = query.list();
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
+                productDemos.add(productDemoForCount); 
+                
+                return productDemos;
+            }
+        }
+        catch(HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        
+        return null;
+    }
+
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +58,12 @@ public class ManageController
     @RequestMapping(value="/product/add", method=RequestMethod.POST, headers="Accept=application/json")
     public List<ProductDemo> addProductDemo(@RequestBody ProductDemo pd)
     {
+        System.out.println("addProductDemo: bat dau add product: goi ham addProductDemo");
         Integer productDemoNewId = productDemoService.addProductDemo(pd);
-        return this.productDemoService.returnProductsForOnePage(1, pageSize);
+        System.out.println("addProductDemo: xong add product, chuan bi goi thang returnProductForOnePage");
+        List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(1, pageSize);
+        System.out.println("addProductDemo: ket thuc thang returnProductForOnePage, h return list");
+        return products;
     }
     
     
@@ -84,6 +89,7 @@ public class ManageController
     @RequestMapping(value="/product/remove/{id}", method=RequestMethod.DELETE)
     public String removeProductDemo(@PathVariable int id)
     {
+
         this.productDemoService.removeProductDemo(id);
         
         return "Removed";
@@ -99,13 +105,16 @@ public class ManageController
     @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForOnePage(@PathVariable int pageNumber)
     {
-        return this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
+        System.out.println("returnProductForOnePage: bat dau goi ham tra ve product cho 1 page");
+        List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
+        System.out.println("returnProductForOnePage: Goi ham xong roi, h return ne");
+        return products;
     }
     
     
     /*
-     * return products for search name in one page + return max page number
-     * URL    : localhost:8080/SpringMVCRestAPIDemo/product/search?page=***&name=****
+     * return watch products for search name in one page + return max page number
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/product/watch/page/{pageNumber}
      * method : GET
      * */
     @CrossOrigin(origins="http://localhost:9000")
@@ -113,6 +122,19 @@ public class ManageController
     public List<ProductDemo> returnProductsWatchForOnePage(@PathVariable int pageNumber)
     {
         return this.productDemoService.returnProductsWatchForOnePage(pageNumber, pageSize);
+    }
+    
+    
+    /*
+     * return jewelry products for search name in one page + return max page number
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/product/jewelry/page/{pageNumber}
+     * method : GET
+     * */
+    @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/product/jewelry/page/{pageNumber}", method=RequestMethod.GET)
+    public List<ProductDemo> returnProductsJewelryForOnePage(@PathVariable int pageNumber)
+    {
+        return this.productDemoService.returnProductsJewelryForOnePage(pageNumber, pageSize);
     }
     
     

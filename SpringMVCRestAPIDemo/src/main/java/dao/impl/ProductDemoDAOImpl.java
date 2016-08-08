@@ -254,6 +254,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         int maxPageSize;
+        double maxDataSize;
         
         try
         {
@@ -262,15 +263,15 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             // count data size
             String hql = "SELECT count(*) FROM ProductDemo";
 			Query query = session.createQuery(hql);
-			maxPageSize = ((Long) query.uniqueResult()).intValue();
+			maxDataSize = ((Long) query.uniqueResult()).intValue();
             
-            if (maxPageSize%pageSize == 0)
+            if (maxDataSize%pageSize == 0)
             {
-                maxPageSize = maxPageSize/pageSize;            	
+                maxPageSize = (int) maxDataSize/pageSize;            	
             }
             else
             {
-                maxPageSize = maxPageSize/pageSize + 1;
+                maxPageSize = (int) maxDataSize/pageSize + 1;
             }
             
             //page number nay vuot wa' so luong data
@@ -286,7 +287,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 query.setFirstResult((pageNumber-1)*pageSize);
                 query.setMaxResults(pageSize);
                 List<ProductDemo> productDemos = query.list();
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize);
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
                 productDemos.add(productDemoForCount); 
                 
                 return productDemos;
@@ -311,6 +312,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         int maxPageSize;
+        double maxDataSize;
         
         try
         {
@@ -320,15 +322,15 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             String hql = "SELECT COUNT(*) FROM ProductDemo AS p WHERE p.name like :name";
             Query query = session.createQuery(hql);
             query.setParameter("name", "%" + name + "%");
-            maxPageSize = ((Long) query.uniqueResult()).intValue();
+            maxDataSize = ((Long) query.uniqueResult()).intValue();
             
-            if (maxPageSize%pageSize == 0)
+            if (maxDataSize%pageSize == 0)
             {
-                maxPageSize = maxPageSize/pageSize;             
+                maxPageSize = (int) maxDataSize/pageSize;             
             }
             else
             {
-                maxPageSize = maxPageSize/pageSize + 1;
+                maxPageSize = (int) maxDataSize/pageSize + 1;
             }
             
             //page number nay vuot wa' so page hien co
@@ -345,7 +347,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 query.setFirstResult((pageNumber-1)*pageSize);
                 query.setMaxResults(pageSize);
                 List<ProductDemo> productDemos = query.list();
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize);
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
                 productDemos.add(productDemoForCount); 
                 
                 return productDemos;

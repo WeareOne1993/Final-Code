@@ -110,9 +110,10 @@ public class ProductDemo {
     }
 
     //for count data size
-    public ProductDemo(int id)
+    public ProductDemo(int id, double price)
     {
         this.id = id;
+        this.price = price;
     }
     
     

@@ -102,8 +102,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             }
             
         }
-        else 
-            System.out.println("ok!");
 
         return productDemoId;
     }
@@ -182,7 +180,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
 
             productDemo.setPrice(price);
             productDemo.setPath(path);
-            System.out.println("updateded");
             tx.commit();
         }
         catch (HibernateException he)
@@ -207,10 +204,12 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         try
         {
             tr = session.beginTransaction();
-            Criteria crit = session.createCriteria(ProductDemo.class);
-            List<ProductDemo> products = crit.list();
+//            Criteria crit = session.createCriteria(ProductDemo.class);
+ //           List<ProductDemo> products = crit.list();
+            String hql = "from ProductDemo";
+            Query query = session.createQuery(hql);
             
-            return products;            
+            return query.list();            
         }
         catch (HibernateException he)
         {
@@ -250,12 +249,11 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     }
 
     @SuppressWarnings("deprecation")
-	public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize)
+	public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize)
     {
         Session session = sessionFactory.openSession();
         Transaction tr = null;
-        int newId;
-        pageSize = 8;
+        int maxPageSize;
         
         try
         {
@@ -263,21 +261,20 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             
             // count data size
             String hql = "SELECT count(*) FROM ProductDemo";
-            @SuppressWarnings("rawtypes")
 			Query query = session.createQuery(hql);
-            newId = ((Long) query.uniqueResult()).intValue();
+			maxPageSize = ((Long) query.uniqueResult()).intValue();
             
-            if (newId%pageSize == 0)
+            if (maxPageSize%pageSize == 0)
             {
-            	newId = newId/pageSize;            	
+                maxPageSize = maxPageSize/pageSize;            	
             }
             else
             {
-            	newId = newId/pageSize + 1;
+                maxPageSize = maxPageSize/pageSize + 1;
             }
             
             //page number nay vuot wa' so luong data
-            if (pageNumber > newId)
+            if (pageNumber > maxPageSize || pageNumber == 0)
             {
                 return null;
             }
@@ -289,7 +286,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 query.setFirstResult((pageNumber-1)*pageSize);
                 query.setMaxResults(pageSize);
                 List<ProductDemo> productDemos = query.list();
-                ProductDemo productDemoForCount = new ProductDemo(newId);
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize);
                 productDemos.add(productDemoForCount); 
                 
                 return productDemos;
@@ -304,6 +301,65 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+        }
+        
+        return null;
+    }
+    
+    public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        int maxPageSize;
+        
+        try
+        {
+            tr = session.beginTransaction();
+            
+            //count data searched name size
+            String hql = "SELECT COUNT(*) FROM ProductDemo AS p WHERE p.name like :name";
+            Query query = session.createQuery(hql);
+            query.setParameter("name", "%" + name + "%");
+            maxPageSize = ((Long) query.uniqueResult()).intValue();
+            
+            if (maxPageSize%pageSize == 0)
+            {
+                maxPageSize = maxPageSize/pageSize;             
+            }
+            else
+            {
+                maxPageSize = maxPageSize/pageSize + 1;
+            }
+            
+            //page number nay vuot wa' so page hien co
+            if (pageNumber > maxPageSize || pageNumber == 0)
+            {
+                return null;
+            }
+            else
+            {
+              //get data for 1 page
+                hql = "FROM ProductDemo AS p WHERE p.name LIKE :name";
+                query = session.createQuery(hql);
+                query.setParameter("name", "%" + name + "%");
+                query.setFirstResult((pageNumber-1)*pageSize);
+                query.setMaxResults(pageSize);
+                List<ProductDemo> productDemos = query.list();
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize);
+                productDemos.add(productDemoForCount); 
+                
+                return productDemos;
+            }
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.clear();
         }
         
         return null;

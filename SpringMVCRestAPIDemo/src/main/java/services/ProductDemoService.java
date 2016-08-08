@@ -10,5 +10,6 @@ public interface ProductDemoService
     public List<ProductDemo> listProductDemo();
     public void updateProductDemo(ProductDemo p);
     public void removeProductDemo(Integer id);
-    public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize);
+    public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize);
+    public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name);
 }

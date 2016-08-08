@@ -43,9 +43,15 @@ public class ProductDemoServiceImpl implements ProductDemoService {
     }
     
     @Transactional
-    public List<ProductDemo> returnProductForOnePage(int pageNumber, int pageSize)
+    public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize)
     {
-        return this.productDemoDAO.returnProductForOnePage(pageNumber, pageSize);
+        return this.productDemoDAO.returnProductsForOnePage(pageNumber, pageSize);
+    }
+    
+    @Transactional
+    public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name)
+    {
+        return this.productDemoDAO.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
 
 }

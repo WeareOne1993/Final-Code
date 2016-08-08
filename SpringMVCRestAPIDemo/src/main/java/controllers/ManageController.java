@@ -90,13 +90,30 @@ public class ManageController
     /*
      * return product for one page = page size
      * URL    : localhost:8080/SpringMVCRestAPIDemo/product/page/{i}
+     * method : GET
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
-    public List<ProductDemo> returnProductForOnePage(@PathVariable int pageNumber)
+    public List<ProductDemo> returnProductsForOnePage(@PathVariable int pageNumber)
     {
         int pageSize = 8;
-        return this.productDemoService.returnProductForOnePage(pageNumber, pageSize);
+        
+        return this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
+    }
+    
+    
+    /*
+     * return products for search name in one page + return max page number
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/product/search?page=***&name=****
+     * method : GET
+     * */
+    @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/product/search", method=RequestMethod.GET)
+    public List<ProductDemo> returnProductsForSearchNameForOnePage(@RequestParam("page") int pageNumber, @RequestParam("name") String name)
+    {
+        int pageSize = 8;
+        
+        return this.productDemoService.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     
  

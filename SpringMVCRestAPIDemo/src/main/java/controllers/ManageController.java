@@ -58,11 +58,8 @@ public class ManageController
     @RequestMapping(value="/product/add", method=RequestMethod.POST, headers="Accept=application/json")
     public List<ProductDemo> addProductDemo(@RequestBody ProductDemo pd)
     {
-        System.out.println("addProductDemo: bat dau add product: goi ham addProductDemo");
         Integer productDemoNewId = productDemoService.addProductDemo(pd);
-        System.out.println("addProductDemo: xong add product, chuan bi goi thang returnProductForOnePage");
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(1, pageSize);
-        System.out.println("addProductDemo: ket thuc thang returnProductForOnePage, h return list");
         return products;
     }
     
@@ -74,9 +71,11 @@ public class ManageController
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/update", method=RequestMethod.PUT, headers="Accept=application/json")
-    public void updateProductDemo(@RequestBody ProductDemo pd)
+    public Integer updateProductDemo(@RequestBody ProductDemo pd)
     {
         this.productDemoService.updateProductDemo(pd);
+        
+        return 200;
     } 
     
     
@@ -105,9 +104,7 @@ public class ManageController
     @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForOnePage(@PathVariable int pageNumber)
     {
-        System.out.println("returnProductForOnePage: bat dau goi ham tra ve product cho 1 page");
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
-        System.out.println("returnProductForOnePage: Goi ham xong roi, h return ne");
         return products;
     }
     

@@ -371,7 +371,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
         finally
         {
-            session.clear();
+            session.close();
         }
         
         return null;

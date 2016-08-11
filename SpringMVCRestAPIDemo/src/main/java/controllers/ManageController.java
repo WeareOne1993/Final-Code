@@ -26,7 +26,9 @@ import services.ProductDemoService;
 public class ManageController
 {
     private ProductDemoService productDemoService;
+    private CountNumber countNumber;
     private int pageSize = 8; 
+    //private static int number = 0;
     
     @Autowired(required=true)
     @Qualifier(value="productDemoService")
@@ -34,6 +36,7 @@ public class ManageController
     {
         this.productDemoService = pds;
     }
+
     
     
     /*
@@ -86,12 +89,12 @@ public class ManageController
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/remove/{id}", method=RequestMethod.DELETE)
-    public String removeProductDemo(@PathVariable int id)
+    public ProductDemo removeProductDemo(@PathVariable int id)
     {
 
         this.productDemoService.removeProductDemo(id);
-        
-        return "Removed";
+        ProductDemo p = new ProductDemo(0, 0);
+        return p;
     }
     
     
@@ -118,6 +121,7 @@ public class ManageController
     @RequestMapping(value="/product/watch/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsWatchForOnePage(@PathVariable int pageNumber)
     {
+  //      countNumber.printCount();
         return this.productDemoService.returnProductsWatchForOnePage(pageNumber, pageSize);
     }
     
@@ -147,6 +151,8 @@ public class ManageController
         return this.productDemoService.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     
+
+    
  
     /*
      * call getFigureById
@@ -158,5 +164,5 @@ public class ManageController
         return figureService.getFigureById(id);
     }*/
 
-
+    
 }

@@ -65,7 +65,5 @@ public class ProductDemoServiceImpl implements ProductDemoService {
     {
         return this.productDemoDAO.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
-    
-    
 
 }

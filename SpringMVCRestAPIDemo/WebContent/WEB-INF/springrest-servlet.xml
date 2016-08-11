@@ -16,13 +16,49 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	
 	<mvc:annotation-driven/>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3300/newdb" />
 		<property name="username" value="root" />
 		<property name="password" value="toor" />
-	</bean>
+		<property name="initialSize" value = "10"/>
+	</bean> -->
+	
+ 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	          destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3300/newdb" />
+		<property name="user" value="root" />
+		<property name="password" value="toor" /> 
+		
+
+		<property name="acquireIncrement" value="5" />
+		<property name="minPoolSize" value="40" />
+		<property name="maxPoolSize" value="300" />
+		<property name="maxIdleTime" value="10" />
+<!-- 		<property name="maxStatements" value="1"/>  -->
+	</bean>	 
+
+
+
+
+
+<!-- <bean id="dataSource"
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+      <property name="url" value="jdbc:mysql://localhost:3300/newdb" />
+      <property name="username" value="root" />
+      <property name="password" value="toor" />
+
+  </bean> -->
+
+
+
+
+
+
+
 
 	<!-- Hibernate 4 sessionfactory bean definition -->
 	<bean id="hibernate4AnnotatedSessionFactory"
@@ -36,8 +72,8 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-<!-- 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop> -->
+<!--  				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>  -->
 			</props>
 		</property>
 	</bean>
@@ -49,6 +85,8 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	<bean id="productDemoService" class="services.impl.ProductDemoServiceImpl">
 		<property name="productDemoDAO" ref="productDemoDAO"/>
 	</bean>
+
+
 
 	<context:component-scan base-package="controllers, dao, services" />
 

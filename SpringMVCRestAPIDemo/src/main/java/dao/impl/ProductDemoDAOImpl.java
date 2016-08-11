@@ -10,12 +10,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import controllers.CountNumber;
 import dao.ProductDemoDAO;
 import models.ProductDemo;
 
 public class ProductDemoDAOImpl implements ProductDemoDAO
 {
     private static SessionFactory sessionFactory;
+    private CountNumber countNumber;
 
     public void setSessionFactory(SessionFactory sf)
     {
@@ -87,7 +89,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             {
                 tr = session.beginTransaction();
                 
-                ProductDemo productDemo = new ProductDemo(name, dialType, metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
+                ProductDemo productDemo = new ProductDemo(name, type,  metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
                 productDemoId = (Integer) session.save(productDemo);
                 tr.commit();
             }
@@ -100,6 +102,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             finally
             {
                 session.close();
+                Session s = session.getSession();
+                System.out.println(countNumber.printCount() + ": " + s);
             }
             
         }
@@ -192,6 +196,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
 
     }
@@ -265,7 +271,17 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             String hql = "SELECT count(*) FROM ProductDemo";
 			Query query = session.createQuery(hql);
 			maxDataSize = ((Long) query.uniqueResult()).intValue();
+			System.out.println(maxDataSize);
             
+            if (maxDataSize == 0)
+            {
+                List<ProductDemo> products = new ArrayList<ProductDemo>();
+                ProductDemo product = new ProductDemo(0, 0);
+                products.add(product);
+                
+                return products;
+            }
+			
             if (maxDataSize%pageSize == 0)
             {
                 maxPageSize = (int) maxDataSize/pageSize;            	
@@ -303,6 +319,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;
@@ -372,6 +390,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;
@@ -429,7 +449,14 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
         finally
         {
-            session.close();
+
+            if (session.isOpen())
+            {
+                session.close();            
+            }
+
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;  
@@ -488,6 +515,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;

@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.SpringMVCRestAPIDemo.AppTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 sec
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.04 sec
+>>>>>>> 50a0374f643272a842c21979807a4f77ea98a5c3

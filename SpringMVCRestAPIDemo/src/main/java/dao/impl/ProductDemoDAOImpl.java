@@ -13,14 +13,13 @@ import org.hibernate.Transaction;
 import controllers.CountNumber;
 import dao.ProductDemoDAO;
 import models.ProductDemo;
-import services.impl.HibernateUtil;
+import services.HibernateUtil;
 
 public class ProductDemoDAOImpl implements ProductDemoDAO
 {
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private CountNumber countNumber;
 
-    
     public Integer addProductDemo(ProductDemo p)
     {
         Session session = sessionFactory.openSession();

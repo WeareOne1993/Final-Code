@@ -37,6 +37,7 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 		<property name="minPoolSize" value="40" />
 		<property name="maxPoolSize" value="300" />
 		<property name="maxIdleTime" value="10" />
+		<property name="numHelperThreads" value="10"></property>
 <!-- 		<property name="maxStatements" value="1"/>  -->
 	</bean>	 
 

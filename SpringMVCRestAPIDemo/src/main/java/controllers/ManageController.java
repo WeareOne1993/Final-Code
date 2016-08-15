@@ -117,7 +117,7 @@ public class ManageController
     public List<ProductDemo> returnProductsForOnePagee(@PathVariable int pageNumber)
     {
         this.productDemoService.getMaxDataSize();
-        List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
+        List<ProductDemo> products = this.productDemoService.returnProductsForOnePagee(pageNumber, pageSize);
         return products;
     }
     

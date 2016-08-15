@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +51,7 @@ public class ProductDemoServiceImpl implements ProductDemoService
     
     public List<ProductDemo> returnProductsForOnePagee(int pageNumber, int pageSize)
     {
-        return this.productDemoDAO.returnProductsForOnePage(pageNumber, pageSize);
+        return this.productDemoDAO.returnProductsForOnePagee(pageNumber, pageSize);
     }
     
     @Transactional
@@ -79,25 +81,42 @@ public class ProductDemoServiceImpl implements ProductDemoService
     @Transactional
     public void getMaxDataSize()
     {
+        if (this.productDemoDAO.getIsActiveCountData() == 0)
+        {
            this.productDemoDAO.setMaxDataSize(this.productDemoDAO.getMaxDataSize());
+           this.productDemoDAO.setIsActiveCountData(1);
+        }
     }
         
     @Transactional
     public void getMaxWatchSize()
     {
+        if(this.productDemoDAO.getIsActiveCountWatch() == 0)
+        {
             this.productDemoDAO.setMaxWatchSize(this.productDemoDAO.getMaxWatchSize());
+            this.productDemoDAO.setIsActiveCountWatch(1);
+        }
     }
     
     @Transactional
     public void getMaxJewelrySize()
     {
+        if (this.productDemoDAO.getIsActiveCountJewelry() == 0)
+        {
             this.productDemoDAO.setMaxJewelrySize(this.productDemoDAO.getMaxJewelrySize());
+            this.productDemoDAO.setIsActiveCountJewelry(1);
+        }
     }
     
     @Transactional
     public void initializeListProduct()
     {
         this.productDemoDAO.initializeListProduct();
+    }
+    
+    public String getCurrentTimeStamp()
+    {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
     }
     
 }

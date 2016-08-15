@@ -1,6 +1,9 @@
 package dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -23,17 +26,17 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     private CountNumber countNumber;
     private static List<ProductDemo> initializedListProductDemo;
     
-//    private static int isActiveInitializeList = 0;
-//    private static int isActiveCountData = 0;
-//    private static int isActiveCountWatch = 0;
-//    private static int isActiveCountJewelry = 0;
+    private static int isActiveInitializeList = 0;
+    private static int isActiveCountData = 0;
+    private static int isActiveCountWatch = 0;
+    private static int isActiveCountJewelry = 0;
     
     private static int maxDataSize;
     private static int maxWatchSize;
     private static int maxJewelrySize;
 
     //if = 1: queried to get max maxDataSize
-/*    public int getIsActiveCountData()
+    public int getIsActiveCountData()
     {
         return isActiveCountData;
     }
@@ -63,7 +66,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     {
         this.isActiveCountJewelry = number;
     }
-    */
+    
     
     public void setMaxDataSize(int maxDataSize)
     {
@@ -386,12 +389,24 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     public List<ProductDemo> returnProductsForOnePagee(int pageNumber, int pageSize)
                              
     {
+        
+  //      System.out.println("in " + getCurrentTimeStamp());
+        
+        
         List<ProductDemo> products = new ArrayList<ProductDemo>();
         products.add(initializedListProductDemo.get(0));
         for (int i = 0; i < 8; i++)
         {
-            products.add(initializedListProductDemo.get((pageNumber-1)*pageNumber+i));
+           
+      //      System.out.println(i + ": " + getCurrentTimeStamp());
+      //      products.add(initializedListProductDemo.get((pageNumber-1)*pageNumber+i));
+            System.out.println("pagenumber = " + pageNumber);
+            System.out.println("index = " + (pageNumber-1)*pageSize+i);
+            products.add(initializedListProductDemo.get((pageNumber-1)*pageSize+i));
         }
+        
+        
+    //    System.out.println("out " + getCurrentTimeStamp());
         
         return products;
     }
@@ -721,7 +736,9 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             tr = session.beginTransaction();
             
             Criteria crit = session.createCriteria(ProductDemo.class);            
+            //initializedListProductDemo = crit.setFirstResult(0).setMaxResults(100000).list();
             initializedListProductDemo = crit.list();
+   //         System.out.println("size = " + initializedListProductDemo.size());
             
             System.out.println("end");
         }
@@ -737,6 +754,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
     }
     
+    public String getCurrentTimeStamp()
+    {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
+    }
 
     //public List<ProductDemo> returnProductForSearchNameForOnePagee(int pageNUmber, int pageSize)
 }

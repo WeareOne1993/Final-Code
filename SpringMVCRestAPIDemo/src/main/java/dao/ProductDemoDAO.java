@@ -22,17 +22,17 @@ public interface ProductDemoDAO
     public int getMaxWatchSize();
     public int getMaxJewelrySize();
     
-//    public int getIsActiveCountData();
-//    public int getIsActiveCountWatch();
-//    public int getIsActiveCountJewelry();
+    public int getIsActiveCountData();
+    public int getIsActiveCountWatch();
+    public int getIsActiveCountJewelry();
     
     public void setMaxDataSize(int maxDataSize);
     public void setMaxWatchSize(int maxWatchSize);
     public void setMaxJewelrySize(int maxJewelrySize);
     public void initializeListProduct();
     
-//    public void setIsActiveCountData(int number);
-//    public void setIsActiveCountWatch(int number);
-//    public void setIsActiveCountJewelry(int number);
+    public void setIsActiveCountData(int number);
+    public void setIsActiveCountWatch(int number);
+    public void setIsActiveCountJewelry(int number);
     
 }

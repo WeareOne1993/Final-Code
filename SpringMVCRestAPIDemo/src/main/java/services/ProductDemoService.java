@@ -1,5 +1,7 @@
 package services;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import models.ProductDemo;
@@ -23,4 +25,6 @@ public interface ProductDemoService
     public void getMaxJewelrySize();
     
     public void initializeListProduct();
+    
+    public String getCurrentTimeStamp();
 }

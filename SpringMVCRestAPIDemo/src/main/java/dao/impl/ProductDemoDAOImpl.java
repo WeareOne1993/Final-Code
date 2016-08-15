@@ -394,6 +394,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+
             Session s = session.getSession();
             System.out.println(countNumber.printCount() + ": " + s);
         }

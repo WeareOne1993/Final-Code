@@ -4,12 +4,6 @@ services\ProductDemoService.class
 services\impl\ProductDemoServiceImpl.class
 dao\impl\ProductDemoDAOImpl.class
 models\ProductDemo.class
-<<<<<<< HEAD
-services\impl\HibernateUtil.class
-com\SpringMVCRestAPIDemo\App.class
-controllers\CountNumber.class
-=======
 com\SpringMVCRestAPIDemo\App.class
 controllers\CountNumber.class
 services\HibernateUtil.class
->>>>>>> 50a0374f643272a842c21979807a4f77ea98a5c3

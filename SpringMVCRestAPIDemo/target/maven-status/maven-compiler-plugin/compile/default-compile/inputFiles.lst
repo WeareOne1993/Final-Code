@@ -1,21 +1,9 @@
-<<<<<<< HEAD
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\com\SpringMVCRestAPIDemo\App.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\controllers\ManageController.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\dao\impl\ProductDemoDAOImpl.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\dao\ProductDemoDAO.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\services\impl\ProductDemoServiceImpl.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\models\ProductDemo.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\controllers\CountNumber.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\services\ProductDemoService.java
-C:\Users\intern\Desktop\Working\GIT\SpringMVC+Aurelia+NewRepository\Final-Code\SpringMVCRestAPIDemo\src\main\java\services\impl\HibernateUtil.java
-=======
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\com\SpringMVCRestAPIDemo\App.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\controllers\ManageController.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\dao\ProductDemoDAO.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\services\ProductDemoService.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\controllers\CountNumber.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\dao\impl\ProductDemoDAOImpl.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\services\impl\ProductDemoServiceImpl.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\models\ProductDemo.java
-C:\Users\51100_000\Desktop\GIT\WorkSpaceForGitEclipse\SpringMVCRestAPIDemo\src\main\java\services\HibernateUtil.java
->>>>>>> 50a0374f643272a842c21979807a4f77ea98a5c3
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\com\SpringMVCRestAPIDemo\App.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\services\impl\ProductDemoServiceImpl.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\controllers\CountNumber.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\services\ProductDemoService.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\controllers\ManageController.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\models\ProductDemo.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\dao\impl\ProductDemoDAOImpl.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\dao\ProductDemoDAO.java
+D:\Final-Code\SpringMVCRestAPIDemo\src\main\java\services\HibernateUtil.java

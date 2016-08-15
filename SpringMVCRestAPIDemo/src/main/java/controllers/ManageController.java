@@ -26,7 +26,9 @@ import services.ProductDemoService;
 public class ManageController
 {
     private ProductDemoService productDemoService;
+    private CountNumber countNumber;
     private int pageSize = 8; 
+    //private static int number = 0;
     
     @Autowired(required=true)
     @Qualifier(value="productDemoService")
@@ -34,6 +36,7 @@ public class ManageController
     {
         this.productDemoService = pds;
     }
+
     
     
     /*
@@ -58,11 +61,8 @@ public class ManageController
     @RequestMapping(value="/product/add", method=RequestMethod.POST, headers="Accept=application/json")
     public List<ProductDemo> addProductDemo(@RequestBody ProductDemo pd)
     {
-        System.out.println("addProductDemo: bat dau add product: goi ham addProductDemo");
         Integer productDemoNewId = productDemoService.addProductDemo(pd);
-        System.out.println("addProductDemo: xong add product, chuan bi goi thang returnProductForOnePage");
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(1, pageSize);
-        System.out.println("addProductDemo: ket thuc thang returnProductForOnePage, h return list");
         return products;
     }
     
@@ -74,9 +74,11 @@ public class ManageController
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/update", method=RequestMethod.PUT, headers="Accept=application/json")
-    public void updateProductDemo(@RequestBody ProductDemo pd)
+    public Integer updateProductDemo(@RequestBody ProductDemo pd)
     {
         this.productDemoService.updateProductDemo(pd);
+        
+        return 200;
     } 
     
     
@@ -87,12 +89,12 @@ public class ManageController
      * */
     @CrossOrigin(origins="http://localhost:9000")
     @RequestMapping(value="/product/remove/{id}", method=RequestMethod.DELETE)
-    public String removeProductDemo(@PathVariable int id)
+    public ProductDemo removeProductDemo(@PathVariable int id)
     {
 
         this.productDemoService.removeProductDemo(id);
-        
-        return "Removed";
+        ProductDemo p = new ProductDemo(0, 0);
+        return p;
     }
     
     
@@ -105,9 +107,7 @@ public class ManageController
     @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForOnePage(@PathVariable int pageNumber)
     {
-        System.out.println("returnProductForOnePage: bat dau goi ham tra ve product cho 1 page");
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
-        System.out.println("returnProductForOnePage: Goi ham xong roi, h return ne");
         return products;
     }
     
@@ -121,6 +121,7 @@ public class ManageController
     @RequestMapping(value="/product/watch/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsWatchForOnePage(@PathVariable int pageNumber)
     {
+  //      countNumber.printCount();
         return this.productDemoService.returnProductsWatchForOnePage(pageNumber, pageSize);
     }
     
@@ -154,16 +155,18 @@ public class ManageController
         return this.productDemoService.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     
- 
+
+    
     /*
-     * call getFigureById
-     * URL   : localhost:8080/SpringMVCRestAPIDemo/figure/
+     * return amount of product
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/products/{number}
+     * method : GET
      * */
-/*    @RequestMapping(value="figure/{id}", method=RequestMethod.GET)
-    public Figure getFigureById(@PathVariable Integer id)
+    @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/products/{number}", method=RequestMethod.GET)
+    public List<ProductDemo> returnAmountOfProduct(@PathVariable int number)
     {
-        return figureService.getFigureById(id);
-    }*/
-
-
+        return this.productDemoService.returnAmountOfProduct(number);
+    }
+    
 }

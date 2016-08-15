@@ -66,6 +66,10 @@ public class ProductDemoServiceImpl implements ProductDemoService {
         return this.productDemoDAO.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     
-    
+    @Transactional
+    public List<ProductDemo> returnAmountOfProduct(int number)
+    {
+        return this.productDemoDAO.returnAmountOfProduct(number);
+    }
 
 }

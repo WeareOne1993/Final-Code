@@ -10,18 +10,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import controllers.CountNumber;
 import dao.ProductDemoDAO;
 import models.ProductDemo;
+import services.HibernateUtil;
 
 public class ProductDemoDAOImpl implements ProductDemoDAO
 {
-    private static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private CountNumber countNumber;
 
-    public void setSessionFactory(SessionFactory sf)
-    {
-        this.sessionFactory = sf;
-    }
-    
     public Integer addProductDemo(ProductDemo p)
     {
         Session session = sessionFactory.openSession();
@@ -87,7 +85,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             {
                 tr = session.beginTransaction();
                 
-                ProductDemo productDemo = new ProductDemo(name, dialType, metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
+                ProductDemo productDemo = new ProductDemo(name, type,  metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
                 productDemoId = (Integer) session.save(productDemo);
                 tr.commit();
             }
@@ -100,6 +98,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             finally
             {
                 session.close();
+                Session s = session.getSession();
+                System.out.println(countNumber.printCount() + ": " + s);
             }
             
         }
@@ -192,6 +192,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
 
     }
@@ -249,6 +251,14 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
     }
 
+    public void returnProductsNumber(int productNumber)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        
+    }
+    
     @SuppressWarnings("deprecation")
 	public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize)
     {
@@ -265,7 +275,17 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             String hql = "SELECT count(*) FROM ProductDemo";
 			Query query = session.createQuery(hql);
 			maxDataSize = ((Long) query.uniqueResult()).intValue();
+			System.out.println(maxDataSize);
             
+            if (maxDataSize == 0)
+            {
+                List<ProductDemo> products = new ArrayList<ProductDemo>();
+                ProductDemo product = new ProductDemo(0, 0);
+                products.add(product);
+                
+                return products;
+            }
+			
             if (maxDataSize%pageSize == 0)
             {
                 maxPageSize = (int) maxDataSize/pageSize;            	
@@ -303,6 +323,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;
@@ -372,6 +394,9 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;
@@ -429,7 +454,14 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
         finally
         {
-            session.close();
+
+            if (session.isOpen())
+            {
+                session.close();            
+            }
+
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;  
@@ -488,9 +520,54 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
+            Session s = session.getSession();
+            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;
     }
 
+    public List<ProductDemo> returnAmountOfProduct(int number)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        try
+        {
+            int maxPageSize;
+            String hql = "FROM ProductDemo";
+            Query query = session.createQuery(hql);
+            query.setFirstResult(0);
+            query.setMaxResults(number);
+            List<ProductDemo> products = query.list();
+            
+            if (number%8 == 0)
+            {
+                maxPageSize = number/8;
+            }
+            else
+            {
+                maxPageSize = number/8 + 1;
+            }
+            
+            ProductDemo p = new ProductDemo(maxPageSize, number);
+            
+            products.add(p);
+            
+            return products;
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        
+        return null;
+    }
+    
 }

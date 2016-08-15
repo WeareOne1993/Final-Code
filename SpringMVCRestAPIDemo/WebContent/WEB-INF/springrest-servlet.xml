@@ -78,8 +78,12 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 		</property>
 	</bean>
 
-	<bean id="productDemoDAO" class="dao.impl.ProductDemoDAOImpl">
+
+	<bean id="HibernateUtil" class="services.impl.HibernateUtil">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+	</bean>
+
+	<bean id="productDemoDAO" class="dao.impl.ProductDemoDAOImpl">		
 	</bean>
 	
 	<bean id="productDemoService" class="services.impl.ProductDemoServiceImpl">

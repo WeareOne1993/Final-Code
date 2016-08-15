@@ -153,16 +153,16 @@ public class ManageController
     
 
     
- 
     /*
-     * call getFigureById
-     * URL   : localhost:8080/SpringMVCRestAPIDemo/figure/
+     * return amount of product
+     * URL    : localhost:8080/SpringMVCRestAPIDemo/products/{number}
+     * method : GET
      * */
-/*    @RequestMapping(value="figure/{id}", method=RequestMethod.GET)
-    public Figure getFigureById(@PathVariable Integer id)
+    @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/products/{number}", method=RequestMethod.GET)
+    public List<ProductDemo> returnAmountOfProduct(@PathVariable int number)
     {
-        return figureService.getFigureById(id);
-    }*/
-
+        return this.productDemoService.returnAmountOfProduct(number);
+    }
     
 }

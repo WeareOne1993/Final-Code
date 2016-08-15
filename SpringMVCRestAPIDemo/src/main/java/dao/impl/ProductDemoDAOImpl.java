@@ -13,16 +13,13 @@ import org.hibernate.Transaction;
 import controllers.CountNumber;
 import dao.ProductDemoDAO;
 import models.ProductDemo;
+import services.impl.HibernateUtil;
 
 public class ProductDemoDAOImpl implements ProductDemoDAO
 {
-    private static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private CountNumber countNumber;
 
-    public void setSessionFactory(SessionFactory sf)
-    {
-        this.sessionFactory = sf;
-    }
     
     public Integer addProductDemo(ProductDemo p)
     {
@@ -255,6 +252,14 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
     }
 
+    public void returnProductsNumber(int productNumber)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        
+    }
+    
     @SuppressWarnings("deprecation")
 	public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize)
     {
@@ -522,4 +527,47 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         return null;
     }
 
+    public List<ProductDemo> returnAmountOfProduct(int number)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        try
+        {
+            int maxPageSize;
+            String hql = "FROM ProductDemo";
+            Query query = session.createQuery(hql);
+            query.setFirstResult(0);
+            query.setMaxResults(number);
+            List<ProductDemo> products = query.list();
+            
+            if (number%8 == 0)
+            {
+                maxPageSize = number/8;
+            }
+            else
+            {
+                maxPageSize = number/8 + 1;
+            }
+            
+            ProductDemo p = new ProductDemo(maxPageSize, number);
+            
+            products.add(p);
+            
+            return products;
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        
+        return null;
+    }
+    
 }

@@ -14,5 +14,6 @@ public interface ProductDemoDAO
     public List<ProductDemo> returnProductsWatchForOnePage(int pageNumber, int pageSize);
     public List<ProductDemo> returnProductsJewelryForOnePage(int pageNumber, int pageSize);
     public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name);
+    public List<ProductDemo> returnAmountOfProduct(int number);
     
 }

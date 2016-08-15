@@ -6,10 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dao.ProductDemoDAO;
 import models.ProductDemo;
+import models.StorageCount;
 import services.ProductDemoService;
 
-public class ProductDemoServiceImpl implements ProductDemoService {
-
+public class ProductDemoServiceImpl implements ProductDemoService
+{
+//    private static StorageCount storageCount;
     private ProductDemoDAO productDemoDAO;
     
     public void setProductDemoDAO(ProductDemoDAO productDemoDAO)
@@ -21,20 +23,17 @@ public class ProductDemoServiceImpl implements ProductDemoService {
     public Integer addProductDemo(ProductDemo p) {
         return this.productDemoDAO.addProductDemo(p);
     }
-
     
     @Transactional
     public List<ProductDemo> listProductDemo() {
         return this.productDemoDAO.listProductDemo();
     }
-
     
     @Transactional
     public void updateProductDemo(ProductDemo p) {
         this.productDemoDAO.updateProductDemo(p);
 
     }
-
     
     @Transactional
     public void removeProductDemo(Integer id) {
@@ -44,6 +43,11 @@ public class ProductDemoServiceImpl implements ProductDemoService {
     
     @Transactional
     public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize)
+    {
+        return this.productDemoDAO.returnProductsForOnePage(pageNumber, pageSize);
+    }
+    
+    public List<ProductDemo> returnProductsForOnePagee(int pageNumber, int pageSize)
     {
         return this.productDemoDAO.returnProductsForOnePage(pageNumber, pageSize);
     }
@@ -72,4 +76,28 @@ public class ProductDemoServiceImpl implements ProductDemoService {
         return this.productDemoDAO.returnAmountOfProduct(number);
     }
 
+    @Transactional
+    public void getMaxDataSize()
+    {
+           this.productDemoDAO.setMaxDataSize(this.productDemoDAO.getMaxDataSize());
+    }
+        
+    @Transactional
+    public void getMaxWatchSize()
+    {
+            this.productDemoDAO.setMaxWatchSize(this.productDemoDAO.getMaxWatchSize());
+    }
+    
+    @Transactional
+    public void getMaxJewelrySize()
+    {
+            this.productDemoDAO.setMaxJewelrySize(this.productDemoDAO.getMaxJewelrySize());
+    }
+    
+    @Transactional
+    public void initializeListProduct()
+    {
+        this.productDemoDAO.initializeListProduct();
+    }
+    
 }

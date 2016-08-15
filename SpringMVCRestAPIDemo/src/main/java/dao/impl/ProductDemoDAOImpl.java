@@ -9,6 +9,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import controllers.CountNumber;
 import dao.ProductDemoDAO;
@@ -19,7 +21,65 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
 {
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private CountNumber countNumber;
+    private static List<ProductDemo> initializedListProductDemo;
+    
+//    private static int isActiveInitializeList = 0;
+//    private static int isActiveCountData = 0;
+//    private static int isActiveCountWatch = 0;
+//    private static int isActiveCountJewelry = 0;
+    
+    private static int maxDataSize;
+    private static int maxWatchSize;
+    private static int maxJewelrySize;
 
+    //if = 1: queried to get max maxDataSize
+/*    public int getIsActiveCountData()
+    {
+        return isActiveCountData;
+    }
+    
+    public int getIsActiveCountWatch()
+    {
+        return isActiveCountWatch;
+    }
+    
+    public int getIsActiveCountJewelry()
+    {
+        return isActiveCountJewelry;
+    }
+    
+    
+    public void setIsActiveCountData(int number)
+    {
+        this.isActiveCountData = number;
+    }
+    
+    public void setIsActiveCountWatch(int number)
+    {
+        this.isActiveCountWatch = number;
+    }
+    
+    public void setIsActiveCountJewelry(int number)
+    {
+        this.isActiveCountJewelry = number;
+    }
+    */
+    
+    public void setMaxDataSize(int maxDataSize)
+    {
+        this.maxDataSize = maxDataSize;
+    }
+    
+    public void setMaxWatchSize(int maxWatchSize)
+    {
+        this.maxWatchSize = maxWatchSize;
+    }
+    
+    public void setMaxJewelrySize(int maxJewelrySize)
+    {
+        this.maxJewelrySize = maxJewelrySize;
+    }
+    
     public Integer addProductDemo(ProductDemo p)
     {
         Session session = sessionFactory.openSession();
@@ -62,6 +122,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         {
             try
             {
+                maxDataSize = maxDataSize + 1;
+                maxWatchSize = maxWatchSize + 1;
                 tr = session.beginTransaction();
                 
                 ProductDemo productDemo = new ProductDemo(name, type, brand, model, gender, movement, watchlabel, caseSize, caseThickness, caseMaterial, caseShape, dialType, dialColor, crystal, waterResistance, price, path);
@@ -70,6 +132,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             }
             catch (HibernateException he)
             {
+                maxDataSize = maxDataSize - 1;
+                maxWatchSize = maxWatchSize - 1;
                 if (tr != null)
                     tr.rollback();
                 he.printStackTrace();
@@ -83,6 +147,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         {
             try
             {
+                maxDataSize = maxDataSize + 1;
+                maxJewelrySize = maxJewelrySize + 1;
                 tr = session.beginTransaction();
                 
                 ProductDemo productDemo = new ProductDemo(name, type,  metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
@@ -91,6 +157,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             }
             catch (HibernateException he)
             {
+                maxDataSize = maxDataSize - 1;
+                maxJewelrySize = maxJewelrySize - 1;
                 if (tr != null)
                     tr.rollback();
                 he.printStackTrace();
@@ -200,7 +268,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
 
     public List<ProductDemo> listProductDemo()
     {
-        // TODO Auto-generated method stub
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         
@@ -234,6 +301,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         
         try
         {
+            maxDataSize = maxDataSize - 1;
             tr = session.beginTransaction();
             ProductDemo productDemo = session.get(ProductDemo.class, id);
             session.delete(productDemo);
@@ -241,6 +309,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         }
         catch (HibernateException he)
         {
+            maxDataSize = maxDataSize + 1;
             if (tr != null)
                 tr.rollback();
             he.printStackTrace();
@@ -250,14 +319,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             session.close();
         }
     }
-
-    public void returnProductsNumber(int productNumber)
-    {
-        Session session = sessionFactory.openSession();
-        Transaction tr = null;
-        
-        
-    }
     
     @SuppressWarnings("deprecation")
 	public List<ProductDemo> returnProductsForOnePage(int pageNumber, int pageSize)
@@ -265,17 +326,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         int maxPageSize;
-        double maxDataSize;
         
         try
         {
             tr = session.beginTransaction();
-            
-            // count data size
-            String hql = "SELECT count(*) FROM ProductDemo";
-			Query query = session.createQuery(hql);
-			maxDataSize = ((Long) query.uniqueResult()).intValue();
-			System.out.println(maxDataSize);
             
             if (maxDataSize == 0)
             {
@@ -302,12 +356,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             }
             else
             {
-              //get data for 1 page
-                hql = "FROM ProductDemo";
-                query = session.createQuery(hql);
-                query.setFirstResult((pageNumber-1)*pageSize);
-                query.setMaxResults(pageSize);
-                List<ProductDemo> productDemos = query.list();
+                Criteria crit = session.createCriteria(ProductDemo.class)
+                                        .setFirstResult(((pageNumber-1)*pageSize))
+                                        .setMaxResults(pageSize);
+                List<ProductDemo> productDemos = crit.list();
                 ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
                 productDemos.add(productDemoForCount); 
                 
@@ -330,6 +382,21 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         return null;
     }
     
+    //**************
+    public List<ProductDemo> returnProductsForOnePagee(int pageNumber, int pageSize)
+                             
+    {
+        List<ProductDemo> products = new ArrayList<ProductDemo>();
+        products.add(initializedListProductDemo.get(0));
+        for (int i = 0; i < 8; i++)
+        {
+            products.add(initializedListProductDemo.get((pageNumber-1)*pageNumber+i));
+        }
+        
+        return products;
+    }
+    //**************
+    
     public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name)
     {
         Session session = sessionFactory.openSession();
@@ -342,10 +409,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             tr = session.beginTransaction();
             
             //count data searched name size
-            String hql = "SELECT COUNT(*) FROM ProductDemo AS p WHERE p.name like :name";
-            Query query = session.createQuery(hql);
-            query.setParameter("name", "%" + name + "%");
-            maxDataSize = ((Long) query.uniqueResult()).intValue();
+            Criteria crit = session.createCriteria(ProductDemo.class);
+            maxDataSize = (Long) crit.add(Restrictions.ilike("name", "%" + name + "%"))
+                .setProjection(Projections.rowCount())
+                .uniqueResult();
             
             if (maxDataSize == 0)
             {
@@ -372,13 +439,11 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             }
             else
             {
-              //get data for 1 page
-                hql = "FROM ProductDemo AS p WHERE p.name LIKE :name";
-                query = session.createQuery(hql);
-                query.setParameter("name", "%" + name + "%");
-                query.setFirstResult((pageNumber-1)*pageSize);
-                query.setMaxResults(pageSize);
-                List<ProductDemo> productDemos = query.list();
+                List<ProductDemo> productDemos = crit.add(Restrictions.ilike("name", "%" + name + "%"))
+                                                     .setFirstResult((pageNumber-1)*pageSize)
+                                                     .setMaxResults(pageSize)
+                                                     .list();
+                
                 ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
                 productDemos.add(productDemoForCount); 
                 
@@ -407,24 +472,18 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         int maxPageSize;
-        double maxDataSize;
         
         try
         {
             tr = session.beginTransaction();
             
-            // count data size
-            String hql = "SELECT count(*) FROM ProductDemo AS p WHERE p.type = 'watch'";
-            Query query = session.createQuery(hql);
-            maxDataSize = ((Long) query.uniqueResult()).intValue();
-            
-            if (maxDataSize%pageSize == 0)
+            if (maxWatchSize%pageSize == 0)
             {
-                maxPageSize = (int) maxDataSize/pageSize;               
+                maxPageSize = (int) maxWatchSize/pageSize;               
             }
             else
             {
-                maxPageSize = (int) maxDataSize/pageSize + 1;
+                maxPageSize = (int) maxWatchSize/pageSize + 1;
             }
             
             //page number nay vuot wa' so luong data
@@ -435,12 +494,13 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             else
             {
               //get data for 1 page
-                hql = "FROM ProductDemo as p WHERE p.type = 'watch'";
-                query = session.createQuery(hql);
-                query.setFirstResult((pageNumber-1)*pageSize);
-                query.setMaxResults(pageSize);
-                List<ProductDemo> productDemos = query.list();
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
+                List<ProductDemo> productDemos = session.createCriteria(ProductDemo.class)
+                                                        .add(Restrictions.ilike("type", "watch"))
+                                                        .setFirstResult((pageNumber-1)*pageSize)
+                                                        .setMaxResults(pageSize)
+                                                        .list();
+                
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxWatchSize);
                 productDemos.add(productDemoForCount); 
                 
                 return productDemos;
@@ -472,24 +532,18 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         int maxPageSize;
-        double maxDataSize;
         
         try
         {
             tr = session.beginTransaction();
             
-            // count data size
-            String hql = "SELECT count(*) FROM ProductDemo AS p WHERE p.type = 'jewelry'";
-            Query query = session.createQuery(hql);
-            maxDataSize = ((Long) query.uniqueResult()).intValue();
-            
-            if (maxDataSize%pageSize == 0)
+            if (maxJewelrySize%pageSize == 0)
             {
-                maxPageSize = (int) maxDataSize/pageSize;               
+                maxPageSize = (int) maxJewelrySize/pageSize;               
             }
             else
             {
-                maxPageSize = (int) maxDataSize/pageSize + 1;
+                maxPageSize = (int) maxJewelrySize/pageSize + 1;
             }
             
             //page number nay vuot wa' so luong data
@@ -500,12 +554,13 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             else
             {
               //get data for 1 page
-                hql = "FROM ProductDemo as p WHERE p.type = 'jewelry'";
-                query = session.createQuery(hql);
-                query.setFirstResult((pageNumber-1)*pageSize);
-                query.setMaxResults(pageSize);
-                List<ProductDemo> productDemos = query.list();
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
+                
+                List<ProductDemo> productDemos = session.createCriteria(ProductDemo.class)
+                                                        .add(Restrictions.ilike("type", "jewelry"))
+                                                        .setFirstResult((pageNumber-1)*pageSize)
+                                                        .setMaxResults(pageSize)
+                                                        .list();
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxJewelrySize);
                 productDemos.add(productDemoForCount); 
                 
                 return productDemos;
@@ -534,12 +589,13 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         
         try
         {
+            tr = session.beginTransaction();
             int maxPageSize;
-            String hql = "FROM ProductDemo";
-            Query query = session.createQuery(hql);
-            query.setFirstResult(0);
-            query.setMaxResults(number);
-            List<ProductDemo> products = query.list();
+
+            List<ProductDemo> products = session.createCriteria(ProductDemo.class)
+                                                .setFirstResult(0)
+                                                .setMaxResults(number)
+                                                .list();
             
             if (number%8 == 0)
             {
@@ -570,4 +626,117 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         return null;
     }
     
+    public int getMaxDataSize()
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        int maxSizeData;
+        
+        try
+        {
+            tr = session.beginTransaction();
+            String hql = "Select count(*) from ProductDemo";
+            Query query = session.createQuery(hql);
+            maxSizeData = ((Long) query.uniqueResult()).intValue();
+            
+            return maxSizeData;
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        
+        return 0;
+    }
+
+    public int getMaxWatchSize()
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        try
+        {
+            String hql = "Select count(*) from ProductDemo as p where p.type = 'watch'";
+            Query query = session.createQuery(hql);
+            int maxWatchSize = ((Long) query.uniqueResult()).intValue();
+            
+            return maxWatchSize;
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        
+        return 0;
+    }
+
+    public int getMaxJewelrySize()
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        try
+        {
+            String hql = "Select count(*) from ProductDemo as p where p.type = 'jewelry'";
+            Query query = session.createQuery(hql);
+            int maxWatchSize = ((Long) query.uniqueResult()).intValue();
+            
+            return maxWatchSize;
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        
+        return 0;
+    }
+
+    public void initializeListProduct()
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tr = null;
+        
+        try 
+        {
+            System.out.println("start");
+            
+            tr = session.beginTransaction();
+            
+            Criteria crit = session.createCriteria(ProductDemo.class);            
+            initializedListProductDemo = crit.list();
+            
+            System.out.println("end");
+        }
+        catch (HibernateException he)
+        {
+            if (tr != null)
+                tr.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+
+    //public List<ProductDemo> returnProductForSearchNameForOnePagee(int pageNUmber, int pageSize)
 }

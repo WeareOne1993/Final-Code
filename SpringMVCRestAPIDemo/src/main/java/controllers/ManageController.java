@@ -107,6 +107,16 @@ public class ManageController
     @RequestMapping(value="/product/page/{pageNumber}", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForOnePage(@PathVariable int pageNumber)
     {
+        this.productDemoService.getMaxDataSize();
+        List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
+        return products;
+    }
+    
+    @CrossOrigin(origins="http://localhost:9000")
+    @RequestMapping(value="/product/pagee/{pageNumber}", method=RequestMethod.GET)
+    public List<ProductDemo> returnProductsForOnePagee(@PathVariable int pageNumber)
+    {
+        this.productDemoService.getMaxDataSize();
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
         return products;
     }
@@ -148,10 +158,6 @@ public class ManageController
     @RequestMapping(value="/product/search", method=RequestMethod.GET)
     public List<ProductDemo> returnProductsForSearchNameForOnePage(@RequestParam("page") int pageNumber, @RequestParam("name") String name)
     {
-    	
-    	
-    	System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    	
         return this.productDemoService.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     

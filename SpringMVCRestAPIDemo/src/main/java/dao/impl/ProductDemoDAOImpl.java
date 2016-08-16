@@ -25,6 +25,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private CountNumber countNumber;
     private static List<ProductDemo> initializedListProductDemo;
+    private static List<Integer> initializedListDelete = new ArrayList<Integer>();
     
     private static int isActiveInitializeList = 0;
     private static int isActiveCountData = 0;
@@ -51,7 +52,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         return isActiveCountJewelry;
     }
     
-    
     public void setIsActiveCountData(int number)
     {
         this.isActiveCountData = number;
@@ -66,7 +66,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     {
         this.isActiveCountJewelry = number;
     }
-    
     
     public void setMaxDataSize(int maxDataSize)
     {
@@ -132,6 +131,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 ProductDemo productDemo = new ProductDemo(name, type, brand, model, gender, movement, watchlabel, caseSize, caseThickness, caseMaterial, caseShape, dialType, dialColor, crystal, waterResistance, price, path);
                 productDemoId = (Integer) session.save(productDemo);
                 tr.commit();
+                initializedListProductDemo.add(productDemo);
             }
             catch (HibernateException he)
             {
@@ -157,6 +157,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 ProductDemo productDemo = new ProductDemo(name, type,  metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
                 productDemoId = (Integer) session.save(productDemo);
                 tr.commit();
+                initializedListProductDemo.add(productDemo);
             }
             catch (HibernateException he)
             {
@@ -252,7 +253,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
 
             productDemo.setPrice(price);
             productDemo.setPath(path);
+            
             tx.commit();
+            
+            updateProductIntoList(productDemo);
         }
         catch (HibernateException he)
         {
@@ -307,8 +311,45 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             maxDataSize = maxDataSize - 1;
             tr = session.beginTransaction();
             ProductDemo productDemo = session.get(ProductDemo.class, id);
-            session.delete(productDemo);
-            tr.commit();
+            if (productDemo != null)
+            {
+                session.delete(productDemo);
+                tr.commit();
+                
+                if (initializedListDelete.size() == 0)
+                {
+                    System.out.println("== 0");
+                    initializedListDelete.add(id);
+                    shiftIndex(id);
+                }
+                else
+                {
+                    System.out.println("# 0");
+                    boolean isExistId = false;
+                    boolean isContinue = true;
+                    int index = 0;
+                    
+                    int listDeleteSize = initializedListDelete.size();
+                    
+                    while (index < listDeleteSize && isContinue == true)
+                    {
+                        
+                        if (initializedListDelete.get(index) == id)
+                        {
+                            System.out.println("co id trugn roi ne: " + id);
+                            isContinue = false;
+                        }
+                        
+                        index = index + 1;
+                    }
+                    
+                    if (isContinue == true)
+                    {
+                        shiftIndex(id);
+                        initializedListDelete.add(id);                    
+                    }
+                } 
+            }            
         }
         catch (HibernateException he)
         {
@@ -389,24 +430,38 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     public List<ProductDemo> returnProductsForOnePagee(int pageNumber, int pageSize)
                              
     {
+        int maxPageSize;
+        int loopSize;
         
-  //      System.out.println("in " + getCurrentTimeStamp());
+        if (maxDataSize == 0)
+        {
+            List<ProductDemo> products = new ArrayList<ProductDemo>();
+            ProductDemo product = new ProductDemo(0, 0);
+            products.add(product);
+            
+            return products;
+        }
+        
+        if (maxDataSize%pageSize == 0)
+            maxPageSize = (int) maxDataSize/pageSize;
+        else
+            maxPageSize = (int) maxDataSize/pageSize + 1;
         
         
         List<ProductDemo> products = new ArrayList<ProductDemo>();
-        products.add(initializedListProductDemo.get(0));
-        for (int i = 0; i < 8; i++)
+        
+        if (pageNumber*pageSize > maxDataSize)
+            loopSize = maxDataSize-(pageNumber-1)*pageSize;
+        else
+            loopSize = 8;
+        
+        for (int i = 0; i < loopSize; i++)
         {
-           
-      //      System.out.println(i + ": " + getCurrentTimeStamp());
-      //      products.add(initializedListProductDemo.get((pageNumber-1)*pageNumber+i));
-            System.out.println("pagenumber = " + pageNumber);
-            System.out.println("index = " + (pageNumber-1)*pageSize+i);
             products.add(initializedListProductDemo.get((pageNumber-1)*pageSize+i));
-        }
-        
-        
-    //    System.out.println("out " + getCurrentTimeStamp());
+        }    
+
+
+        products.add(new ProductDemo(maxPageSize, maxDataSize));
         
         return products;
     }
@@ -417,7 +472,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         Session session = sessionFactory.openSession();
         Transaction tr = null;
         int maxPageSize;
-        double maxDataSize;
+        double maxDataSearchedSize;
         
         try
         {
@@ -425,11 +480,13 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             
             //count data searched name size
             Criteria crit = session.createCriteria(ProductDemo.class);
-            maxDataSize = (Long) crit.add(Restrictions.ilike("name", "%" + name + "%"))
+            maxDataSearchedSize = (Long) crit.add(Restrictions.like("name", "%" + name + "%"))
                 .setProjection(Projections.rowCount())
                 .uniqueResult();
             
-            if (maxDataSize == 0)
+            System.out.println("crit = " + crit);
+            
+            if (maxDataSearchedSize == 0)
             {
                 List<ProductDemo> products = new ArrayList<ProductDemo>();
                 ProductDemo product = new ProductDemo(0, 0);
@@ -438,13 +495,14 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 return products;
             }
             
-            if (maxDataSize%pageSize == 0)
+            System.out.println("max search size " + maxDataSearchedSize);
+            if (maxDataSearchedSize%pageSize == 0)
             {
-                maxPageSize = (int) maxDataSize/pageSize;             
+                maxPageSize = (int) maxDataSearchedSize/pageSize;             
             }
             else
             {
-                maxPageSize = (int) maxDataSize/pageSize + 1;
+                maxPageSize = (int) maxDataSearchedSize/pageSize + 1;
             }
             
             //page number nay vuot wa' so page hien co
@@ -454,12 +512,24 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             }
             else
             {
-                List<ProductDemo> productDemos = crit.add(Restrictions.ilike("name", "%" + name + "%"))
+                System.out.println("here");
+                System.out.println("name =" + name);
+                System.out.println("max apge size = " + maxPageSize);
+                
+                crit = session.createCriteria(ProductDemo.class);
+                
+                List<ProductDemo> productDemos = crit.add(Restrictions.like("name", "%" + name + "%"))
                                                      .setFirstResult((pageNumber-1)*pageSize)
                                                      .setMaxResults(pageSize)
                                                      .list();
                 
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSize);
+                if (productDemos == null)
+                    System.out.println("null ne");
+                else
+                    System.out.println("size = " + productDemos.size());
+                System.out.println("crit = " + crit);
+                
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSearchedSize);
                 productDemos.add(productDemoForCount); 
                 
                 return productDemos;
@@ -510,7 +580,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             {
               //get data for 1 page
                 List<ProductDemo> productDemos = session.createCriteria(ProductDemo.class)
-                                                        .add(Restrictions.ilike("type", "watch"))
+                                                        .add(Restrictions.like("type", "watch"))
                                                         .setFirstResult((pageNumber-1)*pageSize)
                                                         .setMaxResults(pageSize)
                                                         .list();
@@ -571,7 +641,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
               //get data for 1 page
                 
                 List<ProductDemo> productDemos = session.createCriteria(ProductDemo.class)
-                                                        .add(Restrictions.ilike("type", "jewelry"))
+                                                        .add(Restrictions.like("type", "jewelry"))
                                                         .setFirstResult((pageNumber-1)*pageSize)
                                                         .setMaxResults(pageSize)
                                                         .list();
@@ -731,16 +801,11 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         
         try 
         {
-            System.out.println("start");
-            
             tr = session.beginTransaction();
             
             Criteria crit = session.createCriteria(ProductDemo.class);            
-            //initializedListProductDemo = crit.setFirstResult(0).setMaxResults(100000).list();
+           // initializedListProductDemo = crit.setFirstResult(0).setMaxResults(700000).list();
             initializedListProductDemo = crit.list();
-   //         System.out.println("size = " + initializedListProductDemo.size());
-            
-            System.out.println("end");
         }
         catch (HibernateException he)
         {
@@ -759,5 +824,61 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
     }
 
-    //public List<ProductDemo> returnProductForSearchNameForOnePagee(int pageNUmber, int pageSize)
+    public void getInfoMemory()
+    {
+        Runtime rt = Runtime.getRuntime();
+        long totalMem = rt.totalMemory();
+        long maxMem = rt.maxMemory();
+        long freeMem = rt.freeMemory();
+        double megs = 1048576.0;
+
+        System.out.println ("Total Memory: " + totalMem + " (" + (totalMem/megs) + " MiB)");
+        System.out.println ("Max Memory:   " + maxMem + " (" + (maxMem/megs) + " MiB)");
+        System.out.println ("Free Memory:  " + freeMem + " (" + (freeMem/megs) + " MiB)");
+        
+        //Get the jvm heap size.
+        long heapSize = Runtime.getRuntime().totalMemory();
+
+        //Print the jvm heap size.
+        System.out.println("Heap Size = " + heapSize/megs);
+    }
+
+    public void shiftIndex(int id)
+    {
+        boolean isContinue = true;
+        int index = 0;
+        int startShift = -1;
+        
+        while (isContinue == true && index <= maxDataSize)
+        {
+            if (initializedListProductDemo.get(index).getId() == id)
+            {
+                startShift = index;
+                isContinue = false;
+            }
+            
+            index = index + 1;
+        }
+        
+        isContinue = true;
+        
+        while (isContinue == true && startShift < maxDataSize && startShift != -1)
+        {
+            initializedListProductDemo.set(startShift, initializedListProductDemo.get(startShift+1));
+            startShift = startShift + 1;
+        }
+       
+        initializedListProductDemo.remove(maxDataSize);                   
+    }
+    
+    public void updateProductIntoList(ProductDemo p)
+    {
+        for (int i = 0; i < maxDataSize; i++)
+        {
+            if (initializedListProductDemo.get(i).getId() == p.getId())
+            {
+                initializedListProductDemo.set(i, p);
+            }
+        }
+    }
 }

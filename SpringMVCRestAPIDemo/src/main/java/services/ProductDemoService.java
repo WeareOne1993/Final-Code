@@ -27,4 +27,5 @@ public interface ProductDemoService
     public void initializeListProduct();
     
     public String getCurrentTimeStamp();
+    public void getInfoMemory();
 }

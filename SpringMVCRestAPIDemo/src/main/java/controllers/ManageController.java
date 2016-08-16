@@ -91,7 +91,7 @@ public class ManageController
     @RequestMapping(value="/product/remove/{id}", method=RequestMethod.DELETE)
     public ProductDemo removeProductDemo(@PathVariable int id)
     {
-
+        this.productDemoService.getMaxDataSize();
         this.productDemoService.removeProductDemo(id);
         ProductDemo p = new ProductDemo(0, 0);
         return p;
@@ -109,6 +109,7 @@ public class ManageController
     {
         this.productDemoService.getMaxDataSize();
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(pageNumber, pageSize);
+  //      this.productDemoService.getInfoMemory();
         return products;
     }
     
@@ -118,6 +119,7 @@ public class ManageController
     {
         this.productDemoService.getMaxDataSize();
         List<ProductDemo> products = this.productDemoService.returnProductsForOnePagee(pageNumber, pageSize);
+        //this.productDemoService.getInfoMemory();
         return products;
     }
     
@@ -161,7 +163,6 @@ public class ManageController
         return this.productDemoService.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);
     }
     
-
     
     /*
      * return amount of product

@@ -26,7 +26,7 @@ public class InitializeOnStartup implements ApplicationListener<ContextRefreshed
         this.productDemoService.getMaxWatchSize();
         this.productDemoService.getMaxJewelrySize();
         this.productDemoService.initializeListProduct();
-        System.out.println("finished");
+        System.out.println("initialization finished");
     }
     
 }

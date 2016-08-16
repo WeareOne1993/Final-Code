@@ -119,4 +119,11 @@ public class ProductDemoServiceImpl implements ProductDemoService
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
     }
     
+    public void getInfoMemory()
+    {
+        this.productDemoDAO.getInfoMemory();
+    }
+    
+    
+    
 }

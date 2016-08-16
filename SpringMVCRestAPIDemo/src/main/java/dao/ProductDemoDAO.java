@@ -35,4 +35,8 @@ public interface ProductDemoDAO
     public void setIsActiveCountWatch(int number);
     public void setIsActiveCountJewelry(int number);
     
+    public String getCurrentTimeStamp();
+    public void getInfoMemory();
+    
+    
 }

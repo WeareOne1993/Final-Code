@@ -1,9 +1,12 @@
 dao\ProductDemoDAO.class
 controllers\ManageController.class
 services\ProductDemoService.class
+models\StorageCount.class
 services\impl\ProductDemoServiceImpl.class
 dao\impl\ProductDemoDAOImpl.class
+models\StorageSearch.class
 models\ProductDemo.class
 com\SpringMVCRestAPIDemo\App.class
 controllers\CountNumber.class
+controllers\InitializeOnStartup.class
 services\HibernateUtil.class

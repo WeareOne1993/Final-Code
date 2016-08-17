@@ -62,7 +62,7 @@ public class ManageController
     public List<ProductDemo> addProductDemo(@RequestBody ProductDemo pd)
     {
         Integer productDemoNewId = productDemoService.addProductDemo(pd);
-        List<ProductDemo> products = this.productDemoService.returnProductsForOnePage(1, pageSize);
+        List<ProductDemo> products = this.productDemoService.returnProductsForOnePagee(1, pageSize);
         return products;
     }
     

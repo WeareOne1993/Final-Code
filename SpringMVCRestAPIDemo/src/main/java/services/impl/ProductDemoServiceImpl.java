@@ -54,19 +54,19 @@ public class ProductDemoServiceImpl implements ProductDemoService
         return this.productDemoDAO.returnProductsForOnePagee(pageNumber, pageSize);
     }
     
-    @Transactional
+   
     public List<ProductDemo> returnProductsWatchForOnePage(int pageNumber, int pageSize)
     {
         return this.productDemoDAO.returnProductsWatchForOnePage(pageNumber, pageSize);
     }    
     
-    @Transactional
+    
     public List<ProductDemo> returnProductsJewelryForOnePage(int pageNumber, int pageSize)
     {
         return this.productDemoDAO.returnProductsJewelryForOnePage(pageNumber, pageSize);
     }
     
-    @Transactional
+    
     public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name)
     {
         return this.productDemoDAO.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);

@@ -130,8 +130,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 
                 ProductDemo productDemo = new ProductDemo(name, type, brand, model, gender, movement, watchlabel, caseSize, caseThickness, caseMaterial, caseShape, dialType, dialColor, crystal, waterResistance, price, path);
                 productDemoId = (Integer) session.save(productDemo);
-                tr.commit();
+
                 initializedListProductDemo.add(productDemo);
+                
+                tr.commit();
             }
             catch (HibernateException he)
             {
@@ -156,8 +158,10 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 
                 ProductDemo productDemo = new ProductDemo(name, type,  metal, clasp, chainLength, chainType, width, length, rhodiumPlated, numberOfCenterRoundDiamonds, minimumCaratTotalWeight, minimumColor, minimumClarity, minimumCut, settingType, price, path);
                 productDemoId = (Integer) session.save(productDemo);
-                tr.commit();
+
                 initializedListProductDemo.add(productDemo);
+
+                tr.commit();
             }
             catch (HibernateException he)
             {
@@ -170,14 +174,13 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             finally
             {
                 session.close();
-                Session s = session.getSession();
-                System.out.println(countNumber.printCount() + ": " + s);
             }
             
         }
 
         return productDemoId;
     }
+    
     
     public void updateProductDemo(ProductDemo p)
     {
@@ -256,7 +259,8 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             
             tx.commit();
             
-            updateProductIntoList(productDemo);
+           updateProductIntoList(productDemo);
+            
         }
         catch (HibernateException he)
         {
@@ -267,8 +271,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
-            Session s = session.getSession();
-            System.out.println(countNumber.printCount() + ": " + s);
         }
 
     }
@@ -314,17 +316,18 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             if (productDemo != null)
             {
                 session.delete(productDemo);
-                tr.commit();
+                ;
                 
                 if (initializedListDelete.size() == 0)
                 {
                     System.out.println("== 0");
-                    initializedListDelete.add(id);
+                
+                    initializedListDelete.add(id);                        
                     shiftIndex(id);
+                    
                 }
                 else
                 {
-                    System.out.println("# 0");
                     boolean isExistId = false;
                     boolean isContinue = true;
                     int index = 0;
@@ -336,7 +339,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                         
                         if (initializedListDelete.get(index) == id)
                         {
-                            System.out.println("co id trugn roi ne: " + id);
                             isContinue = false;
                         }
                         
@@ -346,9 +348,14 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                     if (isContinue == true)
                     {
                         shiftIndex(id);
-                        initializedListDelete.add(id);                    
+                        
+
+                        initializedListDelete.add(id);                        
+                        shiftIndex(id);
                     }
                 } 
+                
+                tr.commit();
             }            
         }
         catch (HibernateException he)
@@ -419,8 +426,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
-            Session s = session.getSession();
-            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;
@@ -667,9 +672,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
             {
                 session.close();            
             }
-
-            Session s = session.getSession();
-            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;  
@@ -754,8 +756,6 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
-            Session s = session.getSession();
-            System.out.println(countNumber.printCount() + ": " + s);
         }
         
         return null;

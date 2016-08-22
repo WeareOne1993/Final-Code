@@ -12,12 +12,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import controllers.CountNumber;
 import dao.ProductDemoDAO;
 import models.ProductDemo;
+import models.StorageSearch;
 import services.HibernateUtil;
 
 public class ProductDemoDAOImpl implements ProductDemoDAO
@@ -25,6 +27,7 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private CountNumber countNumber;
     private static List<ProductDemo> initializedListProductDemo;
+    private static List<StorageSearch> countList = new ArrayList<StorageSearch>();
     private static List<Integer> initializedListDelete = new ArrayList<Integer>();
     
     private static int isActiveInitializeList = 0;
@@ -134,6 +137,15 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
                 initializedListProductDemo.add(productDemo);
                 
                 tr.commit();
+                
+                int countListSize = countList.size();
+                for (int i = 0; i < countListSize; i++)
+                {
+                    if (name.toLowerCase().contains(countList.get(i).getName().toLowerCase()))
+                    {
+                        countList.get(i).setNumber(countList.get(i).getNumber() + 1);
+                    }
+                }
             }
             catch (HibernateException he)
             {
@@ -474,69 +486,105 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
     
     public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name)
     {
-/*        Session session = sessionFactory.openSession();
+//        int countSearchedName = 0;
+//        int index = 0;
+//        int maxProductAddedSize = 0;
+//        List<ProductDemo> products = new ArrayList<ProductDemo>();
+//
+//        while (index < maxDataSize)
+//        {
+//            if (initializedListProductDemo.get(index).getName().toLowerCase().contains(name.toLowerCase()) == true)
+//            {
+//                countSearchedName = countSearchedName + 1;
+//                if (countSearchedName >= (pageNumber -1)*8+1 && maxProductAddedSize < 8)
+//                {
+//                    products.add(initializedListProductDemo.get(index));
+//                    maxProductAddedSize = maxProductAddedSize + 1;
+//                }
+//            } 
+//            
+//            index = index + 1;
+//        }
+//        
+//        if (countSearchedName == 0)
+//            products.add(new ProductDemo(0, 0));
+//        else if (countSearchedName%pageSize == 0)
+//            products.add(new ProductDemo(countSearchedName/pageSize, countSearchedName));
+//        else
+//            products.add(new ProductDemo(countSearchedName/pageSize+1, countSearchedName));
+//        
+//        return products;
+
+        
+        Session session = sessionFactory.openSession();
         Transaction tr = null;
+        boolean isStore = false;
+        long maxSearchSize;
+        int s = 0;
+        
         int maxPageSize;
-        double maxDataSearchedSize;      
         
         try
         {
             tr = session.beginTransaction();
-            
-            //count data searched name size
-            Criteria crit = session.createCriteria(ProductDemo.class);
-            maxDataSearchedSize = (Long) crit.add(Restrictions.like("name", "%" + name + "%"))
-                .setProjection(Projections.rowCount())
-                .uniqueResult();
-            
-            System.out.println("crit = " + crit);
-            
-            if (maxDataSearchedSize == 0)
+            if (countList.size() == 0)
             {
-                List<ProductDemo> productss = new ArrayList<ProductDemo>();
-                ProductDemo product = new ProductDemo(0, 0);
-                productss.add(product);
-                
-                return productss;
-            }
-            
-            System.out.println("max search size " + maxDataSearchedSize);
-            if (maxDataSearchedSize%pageSize == 0)
-            {
-                maxPageSize = (int) maxDataSearchedSize/pageSize;             
+                maxSearchSize =  (Long) session.createCriteria(ProductDemo.class).add(Restrictions.like("name", "%" + name + "%")).setProjection(Projections.rowCount()).uniqueResult();
+                s = (int) maxSearchSize;
+                countList.add(new StorageSearch(name, s));
             }
             else
             {
-                maxPageSize = (int) maxDataSearchedSize/pageSize + 1;
+                int storageSize = countList.size();
+                for (int i = 0; i < storageSize; i ++)
+                {
+                    if (countList.get(i).getName().equals(name))
+                    {
+                        isStore = true;
+                        s = countList.get(i).getNumber();
+                        break;
+                    }
+                }
+                
+                if (isStore == false)
+                {
+                    maxSearchSize =  (Long) session.createCriteria(ProductDemo.class).add(Restrictions.like("name", "%" + name + "%")).setProjection(Projections.rowCount()).uniqueResult();
+                    s = (int) maxSearchSize;
+                    countList.add(new StorageSearch(name, s));
+                }
+            }
+
+            if (s == 0)
+            {
+                List<ProductDemo> products = new ArrayList<ProductDemo>();
+                ProductDemo product = new ProductDemo(0, 0);
+                products.add(product);
+                return products;
             }
             
-            //page number nay vuot wa' so page hien co
+            if (s%pageSize == 0)
+            {
+                maxPageSize = (int) s/pageSize;               
+            }
+            else
+            {
+                maxPageSize = (int) s/pageSize + 1;
+            }
+            
+            //page number nay vuot wa' so luong data
             if (pageNumber > maxPageSize || pageNumber == 0)
             {
                 return null;
             }
             else
             {
-                System.out.println("here");
-                System.out.println("name =" + name);
-                System.out.println("max apge size = " + maxPageSize);
-                
-                crit = session.createCriteria(ProductDemo.class);
-                
-                List<ProductDemo> productDemos = crit.add(Restrictions.like("name", "%" + name + "%"))
-                                                     .setFirstResult((pageNumber-1)*pageSize)
-                                                     .setMaxResults(pageSize)
-                                                     .list();
-                
-                if (productDemos == null)
-                    System.out.println("null ne");
-                else
-                    System.out.println("size = " + productDemos.size());
-                System.out.println("crit = " + crit);
-                
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxDataSearchedSize);
+                Criteria crit = session.createCriteria(ProductDemo.class)
+                                        .add(Restrictions.like("name", "%" + name + "%"))
+                                        .setFirstResult(((pageNumber-1)*pageSize))
+                                        .setMaxResults(pageSize);
+                List<ProductDemo> productDemos = crit.list();
+                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, s);
                 productDemos.add(productDemoForCount); 
-                
                 return productDemos;
             }
         }
@@ -549,216 +597,125 @@ public class ProductDemoDAOImpl implements ProductDemoDAO
         finally
         {
             session.close();
-
-            Session s = session.getSession();
-            System.out.println(countNumber.printCount() + ": " + s);
         }
         
-        return null;*/
-        
-        
-        int countSearchedName = 0;
-        int index = 0;
-        int maxProductAddedSize = 0;
-        List<ProductDemo> products = new ArrayList<ProductDemo>();
-
-        while (index < maxDataSize)
-        {
-            if (initializedListProductDemo.get(index).getName().toLowerCase().contains(name.toLowerCase()) == true)
-            {
-                countSearchedName = countSearchedName + 1;
-                if (countSearchedName >= (pageNumber -1)*8+1 && maxProductAddedSize < 8)
-                {
-                    products.add(initializedListProductDemo.get(index));
-                    maxProductAddedSize = maxProductAddedSize + 1;
-                }
-            } 
-            
-            index = index + 1;
-        }
-        
-        if (countSearchedName == 0)
-            products.add(new ProductDemo(0, 0));
-        else if (countSearchedName%pageSize == 0)
-            products.add(new ProductDemo(countSearchedName/pageSize, countSearchedName));
-        else
-            products.add(new ProductDemo(countSearchedName/pageSize+1, countSearchedName));
-        
-        return products;
+        return null;
     }
   
     public List<ProductDemo> returnProductsWatchForOnePage(int pageNumber, int pageSize)
     {
-        Session session = sessionFactory.openSession();
-        Transaction tr = null;
         int maxPageSize;
         
-        try
+        if (maxWatchSize%pageSize == 0)
         {
-            tr = session.beginTransaction();
-            
-            if (maxWatchSize%pageSize == 0)
-            {
-                maxPageSize = (int) maxWatchSize/pageSize;               
-            }
-            else
-            {
-                maxPageSize = (int) maxWatchSize/pageSize + 1;
-            }
-            
-            //page number nay vuot wa' so luong data
-            if (pageNumber > maxPageSize || pageNumber == 0)
-            {
-                return null;
-            }
-            else
-            {
-              //get data for 1 page
-//                List<ProductDemo> productDemos = session.createCriteria(ProductDemo.class)
-//                                                        .add(Restrictions.like("type", "watch"))
-//                                                        .setFirstResult((pageNumber-1)*pageSize)
-//                                                        .setMaxResults(pageSize)
-//                                                        .list();
-                
-                
-                List<ProductDemo> products = new ArrayList<ProductDemo>();
-                boolean isContinue = true;
-                int index = 0;
-                int indexGetCount = 0;
-                int maxIndexGet;
-                
-                if (pageNumber < maxPageSize)
-                {
-                    maxIndexGet = pageNumber * 8;
-                }
-                else
-                {
-                    maxIndexGet = maxWatchSize;
-                }
-                
-                while (index < maxDataSize && isContinue == true)
-                {
-                    if (initializedListProductDemo.get(index).getType().equals("watch"))
-                    {
-                        
-                        indexGetCount = indexGetCount + 1;
-                        
-                        if (indexGetCount >= (pageNumber-1)*8+1 && indexGetCount <= maxIndexGet)
-                            products.add(initializedListProductDemo.get(index));
-                    }
-                    
-                    if (indexGetCount == maxIndexGet)
-                        isContinue = false;
-                    
-                    index = index + 1;
-                }
-                
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxWatchSize);
-                products.add(productDemoForCount); 
-                
-                return products;
-            }
+            maxPageSize = (int) maxWatchSize/pageSize;               
         }
-        catch(HibernateException he)
+        else
         {
-            if (tr != null)
-                tr.rollback();
-            he.printStackTrace();
-        }
-        finally
-        {
-
-            if (session.isOpen())
-            {
-                session.close();            
-            }
+            maxPageSize = (int) maxWatchSize/pageSize + 1;
         }
         
-        return null;  
+        //page number nay vuot wa' so luong data
+        if (pageNumber > maxPageSize || pageNumber == 0)
+        {
+            return null;
+        }
+        else
+        {
+            List<ProductDemo> products = new ArrayList<ProductDemo>();
+            boolean isContinue = true;
+            int index = 0;
+            int indexGetCount = 0;
+            int maxIndexGet;
+            
+            if (pageNumber < maxPageSize)
+            {
+                maxIndexGet = pageNumber * 8;
+            }
+            else
+            {
+                maxIndexGet = maxWatchSize;
+            }
+            
+            while (index < maxDataSize && isContinue == true)
+            {
+                if (initializedListProductDemo.get(index).getType().equals("watch"))
+                {
+                    
+                    indexGetCount = indexGetCount + 1;
+                    
+                    if (indexGetCount >= (pageNumber-1)*8+1 && indexGetCount <= maxIndexGet)
+                        products.add(initializedListProductDemo.get(index));
+                }
+                
+                if (indexGetCount == maxIndexGet)
+                    isContinue = false;
+                
+                index = index + 1;
+            }
+            
+            ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxWatchSize);
+            products.add(productDemoForCount); 
+            
+            return products;
+        }
     }
 
     public List<ProductDemo> returnProductsJewelryForOnePage(int pageNumber, int pageSize)
     {
-        Session session = sessionFactory.openSession();
-        Transaction tr = null;
         int maxPageSize;
         
-        try
+        if (maxJewelrySize%pageSize == 0)
         {
-            tr = session.beginTransaction();
-            
-            if (maxJewelrySize%pageSize == 0)
-            {
-                maxPageSize = (int) maxJewelrySize/pageSize;               
-            }
-            else
-            {
-                maxPageSize = (int) maxJewelrySize/pageSize + 1;
-            }
-            
-            //page number nay vuot wa' so luong data
-            if (pageNumber > maxPageSize || pageNumber == 0)
-            {
-                return null;
-            }
-            else
-            {
-              //get data for 1 page
-                
-//                List<ProductDemo> productDemos = session.createCriteria(ProductDemo.class)
-//                                                        .add(Restrictions.like("type", "jewelry"))
-//                                                        .setFirstResult((pageNumber-1)*pageSize)
-//                                                        .setMaxResults(pageSize)
-//                                                        .list();
-                
-                List<ProductDemo> products = new ArrayList<ProductDemo>();
-                boolean isContinue = true;
-                int index = 0;
-                int indexGetCount = 0;
-                int maxIndexGet;
-                
-                if (pageNumber < maxPageSize)
-                {
-                    maxIndexGet = pageNumber * 8;
-                }
-                else
-                {
-                    maxIndexGet = maxJewelrySize;
-                }
-                while (index < maxDataSize && isContinue == true)
-                {
-                    if (initializedListProductDemo.get(index).getType().equals("jewelry"))
-                    {
-                        indexGetCount = indexGetCount + 1;
-                        
-                        if (indexGetCount >= (pageNumber-1)*8+1 && indexGetCount <= maxIndexGet)
-                            products.add(initializedListProductDemo.get(index));
-                    }
-                    
-                    if (indexGetCount == maxIndexGet)
-                        isContinue = false;
-                    
-                    index = index + 1;
-                }
-                
-                ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxJewelrySize);
-                products.add(productDemoForCount); 
-                
-                return products;
-            }
+            maxPageSize = (int) maxJewelrySize/pageSize;               
         }
-        catch(HibernateException he)
+        else
         {
-            if (tr != null)
-                tr.rollback();
-            he.printStackTrace();
-        }
-        finally
-        {
-            session.close();
+            maxPageSize = (int) maxJewelrySize/pageSize + 1;
         }
         
-        return null;
+        //page number nay vuot wa' so luong data
+        if (pageNumber > maxPageSize || pageNumber == 0)
+        {
+            return null;
+        }
+        else
+        {
+            List<ProductDemo> products = new ArrayList<ProductDemo>();
+            boolean isContinue = true;
+            int index = 0;
+            int indexGetCount = 0;
+            int maxIndexGet;
+            
+            if (pageNumber < maxPageSize)
+            {
+                maxIndexGet = pageNumber * 8;
+            }
+            else
+            {
+                maxIndexGet = maxJewelrySize;
+            }
+            while (index < maxDataSize && isContinue == true)
+            {
+                if (initializedListProductDemo.get(index).getType().equals("jewelry"))
+                {
+                    indexGetCount = indexGetCount + 1;
+                    
+                    if (indexGetCount >= (pageNumber-1)*8+1 && indexGetCount <= maxIndexGet)
+                        products.add(initializedListProductDemo.get(index));
+                }
+                
+                if (indexGetCount == maxIndexGet)
+                    isContinue = false;
+                
+                index = index + 1;
+            }
+            
+            ProductDemo productDemoForCount = new ProductDemo(maxPageSize, maxJewelrySize);
+            products.add(productDemoForCount); 
+            
+            return products;
+        }
     }
 
     public List<ProductDemo> returnAmountOfProduct(int number)

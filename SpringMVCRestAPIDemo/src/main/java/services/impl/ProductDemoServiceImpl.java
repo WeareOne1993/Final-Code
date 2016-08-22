@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dao.ProductDemoDAO;
 import models.ProductDemo;
-import models.StorageCount;
 import services.ProductDemoService;
 
 public class ProductDemoServiceImpl implements ProductDemoService
@@ -66,7 +65,7 @@ public class ProductDemoServiceImpl implements ProductDemoService
         return this.productDemoDAO.returnProductsJewelryForOnePage(pageNumber, pageSize);
     }
     
-    
+    @Transactional
     public List<ProductDemo> returnProductsForSearchNameForOnePage(int pageNumber, int pageSize, String name)
     {
         return this.productDemoDAO.returnProductsForSearchNameForOnePage(pageNumber, pageSize, name);

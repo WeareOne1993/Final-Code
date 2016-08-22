@@ -35,7 +35,7 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 		<property name="acquireIncrement" value="5" />
 		<property name="minPoolSize" value="10" />
-		<property name="maxPoolSize" value="300" />
+		<property name="maxPoolSize" value="500" />
 		<property name="maxIdleTime" value="60" />
 		<property name="numHelperThreads" value="10"></property>
 <!-- 		<property name="maxStatements" value="1"/>  -->
